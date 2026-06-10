@@ -1,0 +1,142 @@
+@* @model IEnumerable<e_store.Models.Product> *@
+@* *@
+@* @{ *@
+@*     ViewData["Title"] = "Index"; *@
+@* } *@
+@* *@
+@* <div class="container mt-4"> *@
+@*     <div class="d-flex justify-content-between align-items-center mb-3"> *@
+@*         <h2>Product Management</h2> *@
+@*         <a asp-action="Create" class="btn btn-primary">Create New Product</a> *@
+@*     </div> *@
+@* *@
+@*     <table class="table table-striped table-bordered align-middle"> *@
+@*         <thead class="table-dark"> *@
+@*             <tr> *@
+@*                 <th>@Html.DisplayNameFor(model => model.Name)</th> *@
+@*                 <th>@Html.DisplayNameFor(model => model.Brand)</th> *@
+@*                 <th>@Html.DisplayNameFor(model => model.Description)</th> *@
+@*                 <th>@Html.DisplayNameFor(model => model.Price)</th> *@
+@*                 <th>@Html.DisplayNameFor(model => model.InventoryCount)</th> *@
+@*                 <th>@Html.DisplayNameFor(model => model.ImageUrl)</th> *@
+@*                 <th>@Html.DisplayNameFor(model => model.CreatedDate)</th> *@
+@*                 <th>@Html.DisplayNameFor(model => model.IsActive)</th> *@
+@*                 <th>@Html.DisplayNameFor(model => model.SKU)</th> *@
+@*                 <th>@Html.DisplayNameFor(model => model.Category)</th> *@
+@*                 <th class="text-center">Actions</th> *@
+@*             </tr> *@
+@*         </thead> *@
+@*         <tbody> *@
+@*             @foreach (var item in Model) { *@
+@*                 <tr> *@
+@*                     <td><strong>@item.Name</strong></td> *@
+@*                     <td>@(item.Brand?.Name ?? "No Brand")</td> $1$ Fixed from item.Brand.Id #1# *@
+@*                     <td>@item.Description</td> *@
+@*                     <td>@item.Price.ToString("C")</td> $1$ Formats nicely as local currency #1# *@
+@*                     <td>@item.InventoryCount</td> *@
+@*                     <td> *@
+@*                         @if (!string.IsNullOrEmpty(item.ImageUrl)) *@
+@*                         { *@
+@*                             <img src="@item.ImageUrl" alt="Product Image" style="width: 50px; height: auto; border-radius: 4px;" /> *@
+@*                         } *@
+@*                         else *@
+@*                         { *@
+@*                             <span class="text-muted">No Image</span> *@
+@*                         } *@
+@*                     </td> *@
+@*                     <td>@item.CreatedDate.ToString("yyyy-MM-dd")</td> *@
+@*                     <td> *@
+@*                         <span class="badge @(item.IsActive ? "bg-success" : "bg-danger")"> *@
+@*                             @(item.IsActive ? "Active" : "Inactive") *@
+@*                         </span> *@
+@*                     </td> *@
+@*                     <td><code class="text-dark">@item.SKU</code></td> *@
+@*                     <td>@(item.Category?.Name ?? "Unassigned")</td> *@
+@*                     <td class="text-center"> *@
+@*                         <div class="btn-group btn-group-sm" role="group"> *@
+@*                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning text-white">Edit</a> *@
+@*                             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info text-white">Details</a> *@
+@*                             <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a> *@
+@*                         </div> *@
+@*                     </td> *@
+@*                 </tr> *@
+@*             } *@
+@*         </tbody> *@
+@*     </table> *@
+@* </div> *@
+
+
+
+@model IEnumerable<e_store.Models.Product>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2><i class="bi bi-box-seam me-2"></i>Product Inventory Dashboard</h2>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Add New Product
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Brand</th>
+                        <th>Category Absolute Path</th>
+                        <th class="text-end">Price</th>
+                        <th class="text-center">Stock Level</th>
+                        <th class="text-end">Management Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@item.Name</strong>
+                                <br />
+                                <small class="text-muted text-monospace">@item.Category.Slug</small>
+                            </td>
+                            <td>@item.Brand?.Name</td>
+                            <td>
+                                <span class="badge bg-light text-dark border">
+                                    @item.Category?.Slug
+                                </span>
+                            </td>
+                            <td class="text-end fw-bold">$@item.Price.ToString("F2")</td>
+                            <td class="text-center">
+                                @if (item.InventoryCount == 0)
+                                {
+                                    <span class="badge bg-danger">Out of Stock</span>
+                                }
+                                else if (item.InventoryCount < 10)
+                                {
+                                    <span class="badge bg-warning text-dark">Low Stock (@item.InventoryCount)</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">@item.InventoryCount Available</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary" title="Edit Properties">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info" title="View Audit Details">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger" title="Remove Product">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

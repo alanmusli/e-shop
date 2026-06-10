@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="p-5 mb-4 bg-light rounded-3 shadow-sm text-center">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Welcome to Our E-Shop</h1>
+        <p class="col-md-8 mx-auto fs-4 text-muted">Premium quality products delivered to your door.</p>
+        <a class="btn btn-primary btn-lg mt-3" asp-controller="Product" asp-action="Index">Browse Products</a>
+    </div>
+</div>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Our Trusted Brands</h2>
+    <div class="row row-cols-2 row-cols-md-4 g-4 text-center">
+        <div class="col"><div class="card p-3 border-0 shadow-sm">Brand A</div></div>
+        <div class="col"><div class="card p-3 border-0 shadow-sm">Brand B</div></div>
+        <div class="col"><div class="card p-3 border-0 shadow-sm">Brand C</div></div>
+        <div class="col"><div class="card p-3 border-0 shadow-sm">Brand D</div></div>
+    </div>
+</div>

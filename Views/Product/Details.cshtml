@@ -1,0 +1,147 @@
+@* @model e_store.Models.Product *@
+@* *@
+@* @{ *@
+@*     ViewData["Title"] = "Details"; *@
+@* } *@
+@* *@
+@* <h1>Details</h1> *@
+@* *@
+@* <div> *@
+@*     <h4>Product</h4> *@
+@*     <hr /> *@
+@*     <dl class="row"> *@
+@*         <dt class = "col-sm-2"> *@
+@*             @Html.DisplayNameFor(model => model.Name) *@
+@*         </dt> *@
+@*         <dd class = "col-sm-10"> *@
+@*             @Html.DisplayFor(model => model.Name) *@
+@*         </dd> *@
+@*         <dt class = "col-sm-2"> *@
+@*             @Html.DisplayNameFor(model => model.Brand) *@
+@*         </dt> *@
+@*         <dd class = "col-sm-10"> *@
+@*             @Html.DisplayFor(model => model.Brand.Id) *@
+@*         </dd> *@
+@*         <dt class = "col-sm-2"> *@
+@*             @Html.DisplayNameFor(model => model.Description) *@
+@*         </dt> *@
+@*         <dd class = "col-sm-10"> *@
+@*             @Html.DisplayFor(model => model.Description) *@
+@*         </dd> *@
+@*         <dt class = "col-sm-2"> *@
+@*             @Html.DisplayNameFor(model => model.Price) *@
+@*         </dt> *@
+@*         <dd class = "col-sm-10"> *@
+@*             @Html.DisplayFor(model => model.Price) *@
+@*         </dd> *@
+@*         <dt class = "col-sm-2"> *@
+@*             @Html.DisplayNameFor(model => model.InventoryCount) *@
+@*         </dt> *@
+@*         <dd class = "col-sm-10"> *@
+@*             @Html.DisplayFor(model => model.InventoryCount) *@
+@*         </dd> *@
+@*         <dt class = "col-sm-2"> *@
+@*             @Html.DisplayNameFor(model => model.ImageUrl) *@
+@*         </dt> *@
+@*         <dd class = "col-sm-10"> *@
+@*             @Html.DisplayFor(model => model.ImageUrl) *@
+@*         </dd> *@
+@*         <dt class = "col-sm-2"> *@
+@*             @Html.DisplayNameFor(model => model.CreatedDate) *@
+@*         </dt> *@
+@*         <dd class = "col-sm-10"> *@
+@*             @Html.DisplayFor(model => model.CreatedDate) *@
+@*         </dd> *@
+@*         <dt class = "col-sm-2"> *@
+@*             @Html.DisplayNameFor(model => model.IsActive) *@
+@*         </dt> *@
+@*         <dd class = "col-sm-10"> *@
+@*             @Html.DisplayFor(model => model.IsActive) *@
+@*         </dd> *@
+@*         <dt class = "col-sm-2"> *@
+@*             @Html.DisplayNameFor(model => model.SKU) *@
+@*         </dt> *@
+@*         <dd class = "col-sm-10"> *@
+@*             @Html.DisplayFor(model => model.SKU) *@
+@*         </dd> *@
+@*         <dt class = "col-sm-2"> *@
+@*             @Html.DisplayNameFor(model => model.Category) *@
+@*         </dt> *@
+@*         <dd class = "col-sm-10"> *@
+@*             @Html.DisplayFor(model => model.Category.Name) *@
+@*         </dd> *@
+@*     </dl> *@
+@* </div> *@
+@* <div> *@
+@*     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> | *@
+@*         <a asp-action="AddToCart" asp-route-id="@Model?.Id">Add to Cart</a>  *@
+@*     <a asp-action="Index">Back to List</a> *@
+@* </div> *@
+
+
+@model e_store.Models.Product
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center py-3">
+            <h5 class="mb-0 text-muted"><i class="bi bi-info-circle me-2"></i>System Catalog Specifications</h5>
+            <span class="badge bg-secondary">Internal ID: #@Model.Id</span>
+        </div>
+        <div class="card-body p-4">
+            <div class="row g-4">
+                <div class="col-md-7 border-end">
+                    <h2 class="mb-1">@Model.Name</h2>
+                    <p class="text-muted text-monospace mb-4">Relative URL Slug Reference: <code>@Model.Category.Slug</code></p>
+                    
+                    <dl class="row">
+                        <dt class="col-sm-4 text-muted">Brand Origin</dt>
+                        <dd class="col-sm-8"><strong>@Model.Brand?.Name</strong></dd>
+
+                        <dt class="col-sm-4 text-muted">Category Leaf Node</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge bg-light text-dark border">@Model.Category?.Slug</span>
+                        </dd>
+
+                        <dt class="col-sm-4 text-muted">Unit Listing Price</dt>
+                        <dd class="col-sm-8 text-primary fw-bold">$@Model.Price.ToString("F2")</dd>
+
+                        <dt class="col-sm-4 text-muted">Active Warehouse Stock</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.InventoryCount == 0)
+                            {
+                                <span class="text-danger fw-bold"><i class="bi bi-exclamation-triangle me-1"></i>Out of Stock</span>
+                            }
+                            else
+                            {
+                                <span>@Model.InventoryCount units tracked in inventory storage</span>
+                            }
+                        </dd>
+                    </dl>
+
+                    <hr />
+
+                    <div class="mt-3">
+                        <h6 class="fw-bold text-muted">Product Description Notes</h6>
+                        <p class="lh-base" style="white-space: pre-line;">@Model.Description</p>
+                    </div>
+                </div>
+
+                <div class="col-md-5 d-flex flex-column justify-content-center align-items-center text-center bg-light rounded p-4">
+                    <div class="border border-secondary border-dashed rounded p-5 w-100 bg-white">
+                        <i class="bi bi-image text-muted display-4"></i>
+                        <h6 class="text-muted mt-3">Image Pipeline Canvas</h6>
+                        <p class="text-muted small mb-0">File stream persistence engine configurations target <strong>Step 3.3</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer bg-light d-flex justify-content-between py-3">
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i> Return to List Dashboard
+            </a>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning text-dark px-4">
+                <i class="bi bi-pencil me-1"></i> Edit Property Ledger
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+@model e_store.Models.Category
+
+@{
+    int level = ViewData["level"] as int? ?? 0;
+    var spacing = new string('-', level * 3);
+}
+
+<tr>
+    <td>
+        @if (level > 0)
+        {
+            <span class="text-muted font-monospace">@spacing&gt;</span>
+        }
+        <strong>@Model.Name</strong>
+    </td>
+    <td><code class="text-dark">/@Model.Slug</code></td>
+    <td>
+        @if (Model.ParentCategory != null)
+        {
+            @Model.ParentCategory.Name
+        }
+        else
+        {
+            <span class="badge bg-primary">Root</span>
+        }
+    </td>
+    <td class="text-center">
+        <div class="btn-group btn-group-sm" role="group">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning text-white">Edit</a>
+            <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-info text-white">Details</a>
+            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+        </div>
+    </td>
+</tr>
+
+@if (Model.SubCategories != null && Model.SubCategories.Any())
+{
+    foreach (var subCategory in Model.SubCategories)
+    {
+        var newViewData = new ViewDataDictionary(ViewData);
+        newViewData["level"] = level + 1;
+        <partial name="_CategoryRow" model="subCategory" view-data="newViewData" />
+    }
+}

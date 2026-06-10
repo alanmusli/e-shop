@@ -1,0 +1,173 @@
+@* @model ICollection<Brand> *@
+@* @{ *@
+@*     ViewBag.Title = "title"; *@
+@*     Layout = "_Layout"; *@
+@* } *@
+@* *@
+@* <h2>Brands we work with</h2> *@
+@* *@
+@* *@
+@* <table> *@
+@*     <thead> *@
+@*     <tr> *@
+@*         <th>Name</th> *@
+@*         <th></th> *@
+@*     </tr> *@
+@*     </thead> *@
+@*      *@
+@*     <tbody> *@
+@*     @foreach (var item in Model) *@
+@*     { *@
+@*         <tr> *@
+@*             <td class="fw-bold">@item.Name</td> *@
+@*             @if (User.IsInRole("Admin")) *@
+@*             { *@
+@*                 <td class="text-end"> *@
+@*                     <form asp-action="Remove" asp-controller="Brand" method="post" asp-route-id="@item.Id" class="d-inline" onsubmit="return confirm('Are you sure you want to delete @item.Name?');"> *@
+@*                         <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button> *@
+@*                     </form> *@
+@*                 </td> *@
+@*             } *@
+@*         </tr> *@
+@*     } *@
+@*     </tbody> *@
+@* </table> *@
+
+
+@model IEnumerable<e_store.Models.Brand>
+
+@{
+    ViewData["Title"] = "Brand Matrix Portfolio";
+    
+    // Dynamic diagnostic values calculated on the fly for the dashboard header
+    int totalBrands = Model?.Count() ?? 0;
+}
+
+<div class="container mt-5">
+    <div class="card border-0 shadow-lg mb-4 text-white position-relative overflow-hidden" 
+         style="background: linear-gradient(135deg, #1e1e2f 0%, #0f0c1b 100%); border-radius: 16px;">
+        
+        <div class="position-absolute end-0 bottom-0 opacity-10 text-white p-5 pointer-events-none" style="transform: scale(3) rotate(-15deg);">
+            <i class="bi bi-patch-check-fill"></i>
+        </div>
+
+        <div class="card-body p-4 p-md-5 z-index-2 position-relative">
+            <div class="row align-items-center g-4">
+                <div class="col-md-7">
+                    <span class="badge bg-gradient bg-primary text-uppercase px-3 py-2 mb-2 tracking-wider fw-bold shadow-sm" style="font-size: 0.75rem;">
+                        Global Partner Network
+                    </span>
+                    <h1 class="display-5 fw-black mb-1 text-white tracking-tight">Brand Operations Registry</h1>
+                    <p class="text-muted mb-0 fs-5 fw-light text-light-opacity">Configure corporate asset classifications, manufacturer profiles, and public logistics alignments.</p>
+                </div>
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="col-md-5 text-md-end">
+                        <a asp-action="Add" class="btn btn-light btn-lg px-4 py-2 fw-bold shadow-md hover-lift transition-all rounded-pill text-dark">
+                            <i class="bi bi-plus-circle-fill text-primary me-2"></i> Introduce New Manufacturer
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; border-left: 4px solid #4e73df !important;">
+                <div class="card-body p-3">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 small fw-bold">Active Partners</div>
+                    <div class="h5 mb-0 font-weight-bold text-dark fs-3 fw-black">@totalBrands</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; border-left: 4px solid #1cc88a !important;">
+                <div class="card-body p-3">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1 small fw-bold">Data Status</div>
+                    <div class="h5 mb-0 text-success font-weight-bold small pt-2"><i class="bi bi-shield-check me-1"></i> Synchronised</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-lg overflow-hidden" style="border-radius: 16px;">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 text-dark">
+                <thead style="background-color: #f8f9fc;" class="text-secondary small text-uppercase tracking-wider border-bottom fw-bold">
+                    <tr>
+                        <th scope="col" class="ps-4 py-3" style="width: 10%;">Internal Ref</th>
+                        <th scope="col" class="py-3" style="width: 45%;">Manufacturer Profiles</th>
+                        <th scope="col" class="py-3" style="width: 30%;">Corporate System Key</th>
+                        <th scope="col" class="text-center py-3" style="width: 15%;">Administrative Access</th>
+                    </tr>
+                </thead>
+                <tbody class="border-0">
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var brand in Model)
+                        {
+                            <tr class="transition-all hover-row-glow">
+                                <td class="ps-4">
+                                    <span class="badge bg-dark-subtle text-dark font-monospace px-2 py-1 border rounded fw-bold">
+                                        #@brand.Id.ToString("D3")
+                                    </span>
+                                </td>
+                                
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center border me-3 shadow-sm" 
+                                             style="width: 44px; height: 44px; min-width: 44px; background: linear-gradient(135deg, #ffffff 0%, #f1f3f7 100%);">
+                                            <i class="bi bi-building text-secondary fs-5"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0 fw-bold fs-5 text-dark">@brand.Name</h6>
+                                            <span class="text-muted small">Verified Authorized Supplier</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                
+                                <td>
+                                    <div class="d-inline-flex align-items-center bg-light border px-3 py-1 rounded-pill">
+                                        <i class="bi bi-key-fill text-muted me-2 small"></i>
+                                        <code class="text-primary font-monospace bg-transparent p-0 border-0 fw-semibold">brand-id://@brand.Name.ToLower().Replace(" ", "-")</code>
+                                    </div>
+                                </td>
+                                
+                                <td class="text-center pe-4">
+                                    <div class="btn-group rounded-pill overflow-hidden border shadow-sm" role="group">
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <a asp-action="Edit" asp-route-id="@brand.Id" class="btn btn-white bg-white btn-sm px-3 text-warning border-end" title="Modify Corporate Record">
+                                                <i class="bi bi-pencil-square fs-6"></i>
+                                            </a>
+                                            <a asp-action="Remove" asp-route-id="@brand.Id" class="btn btn-white bg-white btn-sm px-3 text-danger" title="Revoke Manufacturer Entity">
+                                                <i class="bi bi-trash3-fill fs-6"></i>
+                                            </a>
+                                        }
+                                        <a asp-action="Details" asp-route-id="@brand.Id" class="btn btn-white bg-white btn-sm px-3 text-info border-end" title="Inspect Metrics Ledger">
+                                            <i class="bi bi-layout-text-sidebar-reverse fs-6"></i>
+                                        </a>
+                                       
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-5 bg-white">
+                                <div class="p-4">
+                                    <i class="bi bi-building-dash display-4 text-muted d-block mb-3"></i>
+                                    <h5 class="fw-bold text-secondary">No Manufacturers Logged</h5>
+                                    <p class="text-muted small max-width-400 mx-auto">Your corporate supplier registry matrix is currently empty. Run system seed configurations or introduce a new merchant asset parameter above.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

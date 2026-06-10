@@ -1,0 +1,18 @@
+@model Brand
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Add Brand</h2>
+
+
+
+<form asp-action="Add" asp-controller="Brand" method="post">
+    <input type="hidden" asp-for="@Model.Id" value="0"/>
+    
+    <label>Name:</label>
+    <input type="text" asp-for="@Model.Name"/>
+    
+    <button type="submit">Add Brand</button>
+</form>
