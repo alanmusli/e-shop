@@ -20,11 +20,56 @@ namespace e_store.Controllers
         }
 
         // GET: Product
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? id, int? brandId)
         {
-            var applicationDbContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
-            return View(await applicationDbContext.ToListAsync());
+            var productsQuery = _context.Products
+                .Include(x => x.Brand)
+                .Include(x => x.Category)
+                .AsQueryable();
+
+            if (brandId != null)
+            {
+                productsQuery = productsQuery.Where(x => x.BrandId == brandId); 
+            }
+
+            if (id != "site")
+            {
+                var targetCat = await _context.Categories
+                    .FirstOrDefaultAsync(x => x.Slug == id);
+
+                if (targetCat != null)
+                {
+                    var validCategs = new List<int>();
+                    validCategs.Add(targetCat.Id);
+
+                    var allCats = await _context.Categories.ToListAsync();
+                    FindAllDescendantIds(targetCat.Id, allCats, validCategs);
+
+                    productsQuery = productsQuery.Where(x => x.CategoryId.HasValue && validCategs.Contains(x.CategoryId.Value));
+                    ViewBag.CurrentCategoryName = targetCat.Name;
+                }
+            }
+            else
+            {
+                ViewBag.CurrentCategoryName = "Сите производи";
+            }
+
+            return View(await productsQuery.ToListAsync());
+            
         }
+        
+        private void FindAllDescendantIds(int parentId, List<Category> allCategories, List<int> resultIds)
+        {
+            var children = allCategories.Where(c => c.ParentCategoryId == parentId).ToList();
+
+            foreach (var child in children)
+            {
+                resultIds.Add(child.Id);
+                
+                FindAllDescendantIds(child.Id, allCategories, resultIds);
+            }
+        }
+        
 
         // GET: Product/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -110,6 +155,7 @@ namespace e_store.Controllers
             }
             ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name", product.BrandId);
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+            
             return View(product);
         }
 

@@ -43,66 +43,72 @@
     int totalBrands = Model?.Count() ?? 0;
 }
 
-<div class="container mt-5">
-    <div class="card border-0 shadow-lg mb-4 text-white position-relative overflow-hidden" 
-         style="background: linear-gradient(135deg, #1e1e2f 0%, #0f0c1b 100%); border-radius: 16px;">
-        
-        <div class="position-absolute end-0 bottom-0 opacity-10 text-white p-5 pointer-events-none" style="transform: scale(3) rotate(-15deg);">
-            <i class="bi bi-patch-check-fill"></i>
-        </div>
 
-        <div class="card-body p-4 p-md-5 z-index-2 position-relative">
-            <div class="row align-items-center g-4">
-                <div class="col-md-7">
-                    <span class="badge bg-gradient bg-primary text-uppercase px-3 py-2 mb-2 tracking-wider fw-bold shadow-sm" style="font-size: 0.75rem;">
-                        Global Partner Network
-                    </span>
-                    <h1 class="display-5 fw-black mb-1 text-white tracking-tight">Brand Operations Registry</h1>
-                    <p class="text-muted mb-0 fs-5 fw-light text-light-opacity">Configure corporate asset classifications, manufacturer profiles, and public logistics alignments.</p>
-                </div>
-                @if (User.IsInRole("Admin"))
-                {
-                    <div class="col-md-5 text-md-end">
-                        <a asp-action="Add" class="btn btn-light btn-lg px-4 py-2 fw-bold shadow-md hover-lift transition-all rounded-pill text-dark">
-                            <i class="bi bi-plus-circle-fill text-primary me-2"></i> Introduce New Manufacturer
-                        </a>
+@if (User.IsInRole("Admin"))
+{
+    <div class="container mt-5">
+        <div class="card border-0 shadow-lg mb-4 text-white position-relative overflow-hidden"
+             style="background: linear-gradient(135deg, #1e1e2f 0%, #0f0c1b 100%); border-radius: 16px;">
+
+            <div class="position-absolute end-0 bottom-0 opacity-10 text-white p-5 pointer-events-none" style="transform: scale(3) rotate(-15deg);">
+                <i class="bi bi-patch-check-fill"></i>
+            </div>
+
+            <div class="card-body p-4 p-md-5 z-index-2 position-relative">
+                <div class="row align-items-center g-4">
+                    <div class="col-md-7">
+                        <span class="badge bg-gradient bg-primary text-uppercase px-3 py-2 mb-2 tracking-wider fw-bold shadow-sm" style="font-size: 0.75rem;">
+                            Global Partner Network
+                        </span>
+                        <h1 class="display-5 fw-black mb-1 text-white tracking-tight">Brand Operations Registry</h1>
+                        <p class="text-muted mb-0 fs-5 fw-light text-light-opacity">Configure corporate asset classifications, manufacturer profiles, and public logistics alignments.</p>
                     </div>
-                }
-            </div>
-        </div>
-    </div>
-
-    <div class="row g-3 mb-4">
-        <div class="col-6 col-md-3">
-            <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; border-left: 4px solid #4e73df !important;">
-                <div class="card-body p-3">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 small fw-bold">Active Partners</div>
-                    <div class="h5 mb-0 font-weight-bold text-dark fs-3 fw-black">@totalBrands</div>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="col-md-5 text-md-end">
+                            <a asp-action="Add" class="btn btn-light btn-lg px-4 py-2 fw-bold shadow-md hover-lift transition-all rounded-pill text-dark">
+                                <i class="bi bi-plus-circle-fill text-primary me-2"></i> Introduce New Manufacturer
+                            </a>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
-        <div class="col-6 col-md-3">
-            <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; border-left: 4px solid #1cc88a !important;">
-                <div class="card-body p-3">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1 small fw-bold">Data Status</div>
-                    <div class="h5 mb-0 text-success font-weight-bold small pt-2"><i class="bi bi-shield-check me-1"></i> Synchronised</div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; border-left: 4px solid #4e73df !important;">
+                    <div class="card-body p-3">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 small fw-bold">Active Partners</div>
+                        <div class="h5 mb-0 font-weight-bold text-dark fs-3 fw-black">@totalBrands</div>
+                    </div>
                 </div>
             </div>
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="col-6 col-md-3">
+                    <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; border-left: 4px solid #1cc88a !important;">
+                        <div class="card-body p-3">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1 small fw-bold">Data Status</div>
+                            <div class="h5 mb-0 text-success font-weight-bold small pt-2"><i class="bi bi-shield-check me-1"></i> Synchronised</div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
-    </div>
 
-    <div class="card border-0 shadow-lg overflow-hidden" style="border-radius: 16px;">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0 text-dark">
-                <thead style="background-color: #f8f9fc;" class="text-secondary small text-uppercase tracking-wider border-bottom fw-bold">
+        <div class="card border-0 shadow-lg overflow-hidden" style="border-radius: 16px;">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 text-dark">
+                    <thead style="background-color: #f8f9fc;" class="text-secondary small text-uppercase tracking-wider border-bottom fw-bold">
                     <tr>
                         <th scope="col" class="ps-4 py-3" style="width: 10%;">Internal Ref</th>
                         <th scope="col" class="py-3" style="width: 45%;">Manufacturer Profiles</th>
                         <th scope="col" class="py-3" style="width: 30%;">Corporate System Key</th>
                         <th scope="col" class="text-center py-3" style="width: 15%;">Administrative Access</th>
                     </tr>
-                </thead>
-                <tbody class="border-0">
+                    </thead>
+                    <tbody class="border-0">
                     @if (Model != null && Model.Any())
                     {
                         @foreach (var brand in Model)
@@ -113,10 +119,10 @@
                                         #@brand.Id.ToString("D3")
                                     </span>
                                 </td>
-                                
+
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center border me-3 shadow-sm" 
+                                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center border me-3 shadow-sm"
                                              style="width: 44px; height: 44px; min-width: 44px; background: linear-gradient(135deg, #ffffff 0%, #f1f3f7 100%);">
                                             <i class="bi bi-building text-secondary fs-5"></i>
                                         </div>
@@ -126,14 +132,14 @@
                                         </div>
                                     </div>
                                 </td>
-                                
+
                                 <td>
                                     <div class="d-inline-flex align-items-center bg-light border px-3 py-1 rounded-pill">
                                         <i class="bi bi-key-fill text-muted me-2 small"></i>
                                         <code class="text-primary font-monospace bg-transparent p-0 border-0 fw-semibold">brand-id://@brand.Name.ToLower().Replace(" ", "-")</code>
                                     </div>
                                 </td>
-                                
+
                                 <td class="text-center pe-4">
                                     <div class="btn-group rounded-pill overflow-hidden border shadow-sm" role="group">
                                         @if (User.IsInRole("Admin"))
@@ -148,7 +154,7 @@
                                         <a asp-action="Details" asp-route-id="@brand.Id" class="btn btn-white bg-white btn-sm px-3 text-info border-end" title="Inspect Metrics Ledger">
                                             <i class="bi bi-layout-text-sidebar-reverse fs-6"></i>
                                         </a>
-                                       
+
                                     </div>
                                 </td>
                             </tr>
@@ -166,8 +172,73 @@
                             </td>
                         </tr>
                     }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+}
+else
+{
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-end mb-5 border-bottom pb-3" style="border-color: rgba(28, 28, 132, 0.1) !important;">
+        <div>
+            <p class="font-monospace small text-uppercase tracking-wider mb-1" style="color: var(--brand-red); font-weight: 700;">Глобална Мрежа на Партнери</p>
+            <h2 class="fw-bold mb-0 bistrejd-text-blue" style="letter-spacing: -0.5px;">Официјални Брендови</h2>
+        </div>
+        
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Create" class="btn bistrejd-btn-red fw-bold text-uppercase d-flex align-items-center px-4 py-2 shadow-sm" style="border-radius: 8px; font-size: 13px;">
+                <i class="bi bi-plus-circle me-2 fs-6"></i> Додади Нов Бренд
+            </a>
+        }
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <a asp-controller="Product" asp-action="Index" asp-route-brandId="@item.Id" class="text-decoration-none">
+                    <div class="card h-100 border-0 shadow-sm brand-card" style="border-radius: 16px; background-color: #ffffff;">
+                        
+                        <div class="position-relative p-4 d-flex justify-content-center align-items-center" style="background-color: var(--brand-light); border-radius: 16px 16px 0 0; height: 160px; border-bottom: 1px solid rgba(28, 28, 132, 0.05);">
+                            <div class="text-center">
+                                <i class="bi bi-buildings display-4 mb-2" style="color: var(--brand-blue); opacity: 0.2;"></i>
+                                <h4 class="fw-bold bistrejd-text-blue mb-0" style="letter-spacing: -0.5px;">@item.Name</h4>
+                            </div>
+                        </div>
+
+                        <div class="card-body text-center p-4">
+                            <p class="text-muted small mb-0 font-monospace text-uppercase" style="letter-spacing: 0.5px;">
+                                Verified Supplier
+                            </p>
+                            </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
 </div>
+
+<style>
+    .brand-card {
+        transition: all 0.3s ease;
+        border: 1px solid transparent !important;
+    }
+    
+    .brand-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(28, 28, 132, 0.1) !important;
+        border-color: rgba(28, 28, 132, 0.1) !important;
+    }
+    
+    .brand-card h4 {
+        transition: color 0.3s ease;
+    }
+    
+    .brand-card:hover h4 {
+        color: var(--brand-red) !important;
+    }
+</style>
+}

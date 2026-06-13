@@ -26,9 +26,12 @@
     </td>
     <td class="text-center">
         <div class="btn-group btn-group-sm" role="group">
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning text-white">Edit</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning text-white">Edit</a>
+                <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+            }
             <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-info text-white">Details</a>
-            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
         </div>
     </td>
 </tr>

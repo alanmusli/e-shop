@@ -1,21 +1,138 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@* @{ *@
+@*     ViewData["Title"] = "Home Page"; *@
+@* } *@
+@* *@
+@* <div class="p-5 mb-4 bg-light rounded-3 shadow-sm text-center"> *@
+@*     <div class="container-fluid py-5"> *@
+@*         <h1 class="display-5 fw-bold">Welcome to Our E-Shop</h1> *@
+@*         <p class="col-md-8 mx-auto fs-4 text-muted">Premium quality products delivered to your door.</p> *@
+@*         <a class="btn btn-primary btn-lg mt-3" asp-controller="Product" asp-action="Index">Browse Products</a> *@
+@*     </div> *@
+@* </div> *@
+@* *@
+@* <div class="container my-5"> *@
+@*     <h2 class="text-center mb-4">Our Trusted Brands</h2> *@
+@*     <div class="row row-cols-2 row-cols-md-4 g-4 text-center"> *@
+@*         <div class="col"><div class="card p-3 border-0 shadow-sm">Brand A</div></div> *@
+@*         <div class="col"><div class="card p-3 border-0 shadow-sm">Brand B</div></div> *@
+@*         <div class="col"><div class="card p-3 border-0 shadow-sm">Brand C</div></div> *@
+@*         <div class="col"><div class="card p-3 border-0 shadow-sm">Brand D</div></div> *@
+@*     </div> *@
+@* </div> *@
+
+
+@{
+    ViewData["Title"] = "Почетна";
 }
 
-<div class="p-5 mb-4 bg-light rounded-3 shadow-sm text-center">
-    <div class="container-fluid py-5">
-        <h1 class="display-5 fw-bold">Welcome to Our E-Shop</h1>
-        <p class="col-md-8 mx-auto fs-4 text-muted">Premium quality products delivered to your door.</p>
-        <a class="btn btn-primary btn-lg mt-3" asp-controller="Product" asp-action="Index">Browse Products</a>
+<div class="position-relative overflow-hidden text-center shadow-lg mb-5" style="background: linear-gradient(135deg, var(--brand-blue) 0%, #0a0a32 100%); border-radius: 0 0 40px 40px;">
+    <div class="col-md-8 p-lg-5 mx-auto my-5 py-5">
+        <p class="font-monospace fw-bold mb-3 tracking-wider text-uppercase" style="color: var(--brand-red); letter-spacing: 2px;">
+            <i class="bi bi-star-fill me-2"></i>Премиум квалитет
+        </p>
+        
+        <h1 class="display-3 fw-bold mb-4 text-white" style="letter-spacing: -1px;">
+            Професионални алати за секој мајстор
+        </h1>
+        
+        <p class="lead fw-normal text-white-50 mb-5 mx-auto" style="max-width: 600px;">
+            Откријте го нашиот премиум каталог на алати и опрема. Врвен квалитет, докажани брендови и сигурна достава директно до вашата врата.
+        </p>
+        
+        <div class="d-flex justify-content-center gap-3">
+            <a asp-controller="Product" asp-action="Index" class="btn bistrejd-btn-red btn-lg px-5 py-3 fw-bold text-uppercase d-flex align-items-center shadow">
+                <i class="bi bi-cart-fill me-2"></i> Разгледај Каталог
+            </a>
+            <a asp-controller="Contact" asp-action="Index" class="btn btn-outline-light btn-lg px-5 py-3 fw-bold text-uppercase d-flex align-items-center">
+                Контакт
+            </a>
+        </div>
+    </div>
+    
+    <i class="bi bi-tools position-absolute" style="font-size: 25rem; color: rgba(255,255,255,0.02); bottom: -50px; right: -50px; transform: rotate(-15deg);"></i>
+</div>
+
+<div class="container mb-5">
+    <div class="row g-4 mb-5 pb-5 border-bottom" style="border-color: rgba(28, 28, 132, 0.1) !important;">
+        <div class="col-md-4 text-center">
+            <div class="d-inline-flex align-items-center justify-content-center bg-light rounded-circle mb-3 shadow-sm" style="width: 80px; height: 80px;">
+                <i class="bi bi-truck display-5 bistrejd-text-blue"></i>
+            </div>
+            <h5 class="fw-bold bistrejd-text-blue">Брза Достава</h5>
+            <p class="text-muted small">Испорака низ цела држава во рок од 24-48 часа за сите нарачки.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="d-inline-flex align-items-center justify-content-center bg-light rounded-circle mb-3 shadow-sm" style="width: 80px; height: 80px;">
+                <i class="bi bi-shield-check display-5 bistrejd-text-blue"></i>
+            </div>
+            <h5 class="fw-bold bistrejd-text-blue">Сигурно Плаќање</h5>
+            <p class="text-muted small">100% безбедни трансакции и заштита на вашите податоци.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="d-inline-flex align-items-center justify-content-center bg-light rounded-circle mb-3 shadow-sm" style="width: 80px; height: 80px;">
+                <i class="bi bi-patch-check display-5 bistrejd-text-blue"></i>
+            </div>
+            <h5 class="fw-bold bistrejd-text-blue">Оригинални Брендови</h5>
+            <p class="text-muted small">Овластени дистрибутери за сите брендови во нашиот каталог.</p>
+        </div>
+    </div>
+
+    <div class="text-center mb-5">
+        <p class="font-monospace small text-uppercase tracking-wider mb-1" style="color: var(--brand-red); font-weight: 700;">Глобална Мрежа</p>
+        <h2 class="fw-bold bistrejd-text-blue mb-4">Наши Доверливи Партнери</h2>
+    </div>
+
+    <div class="row row-cols-2 row-cols-md-4 g-4 text-center justify-content-center">
+        <div class="col">
+            <div class="card border-0 shadow-sm h-100 py-4 brand-hover-card" style="border-radius: 12px; background-color: var(--brand-light);">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <i class="bi bi-buildings display-5 mb-2" style="color: var(--brand-blue); opacity: 0.3;"></i>
+                    <h5 class="fw-bold bistrejd-text-blue mb-0">DeWalt</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-0 shadow-sm h-100 py-4 brand-hover-card" style="border-radius: 12px; background-color: var(--brand-light);">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <i class="bi bi-buildings display-5 mb-2" style="color: var(--brand-blue); opacity: 0.3;"></i>
+                    <h5 class="fw-bold bistrejd-text-blue mb-0">Makita</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-0 shadow-sm h-100 py-4 brand-hover-card" style="border-radius: 12px; background-color: var(--brand-light);">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <i class="bi bi-buildings display-5 mb-2" style="color: var(--brand-blue); opacity: 0.3;"></i>
+                    <h5 class="fw-bold bistrejd-text-blue mb-0">Bosch</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-0 shadow-sm h-100 py-4 brand-hover-card" style="border-radius: 12px; background-color: var(--brand-light);">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <i class="bi bi-buildings display-5 mb-2" style="color: var(--brand-blue); opacity: 0.3;"></i>
+                    <h5 class="fw-bold bistrejd-text-blue mb-0">Milwaukee</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center mt-5">
+        <a asp-controller="Brand" asp-action="Index" class="btn btn-outline-secondary font-monospace text-uppercase fw-bold px-4 rounded-pill" style="font-size: 12px;">
+            Сите брендови <i class="bi bi-arrow-right ms-1"></i>
+        </a>
     </div>
 </div>
 
-<div class="container my-5">
-    <h2 class="text-center mb-4">Our Trusted Brands</h2>
-    <div class="row row-cols-2 row-cols-md-4 g-4 text-center">
-        <div class="col"><div class="card p-3 border-0 shadow-sm">Brand A</div></div>
-        <div class="col"><div class="card p-3 border-0 shadow-sm">Brand B</div></div>
-        <div class="col"><div class="card p-3 border-0 shadow-sm">Brand C</div></div>
-        <div class="col"><div class="card p-3 border-0 shadow-sm">Brand D</div></div>
-    </div>
-</div>
+<style>
+    .brand-hover-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .brand-hover-card:hover {
+        transform: translateY(-5px);
+        background-color: #ffffff !important;
+        box-shadow: 0 10px 20px rgba(28, 28, 132, 0.1) !important;
+    }
+</style>

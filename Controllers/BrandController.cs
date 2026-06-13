@@ -2,6 +2,7 @@ using e_store.Data;
 using e_store.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace e_store.Controllers;
 
@@ -26,6 +27,7 @@ public class BrandController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public IActionResult Add(int Id,string? Name)
     {
         var isThere = _context.Brands.FirstOrDefault(x => x.Name.ToLower() == Name.ToLower());
@@ -44,9 +46,17 @@ public class BrandController : Controller
         return RedirectToAction("Index", "Home");
     }
 
-    public IActionResult Details(int? id)
+    public async Task<IActionResult> Details(int? id)
     {
-        var brand = _context.Brands.FirstOrDefault(x => x.Id == id);
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        // 2. Add 'await' and change '.FirstOrDefault()' to '.FirstOrDefaultAsync()'
+        var brand = await _context.Brands
+            .Include(x => x.Products)
+            .FirstOrDefaultAsync(x => x.Id == id);
 
         if (brand == null)
         {
@@ -57,6 +67,7 @@ public class BrandController : Controller
     }
     
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public IActionResult Remove(int id)
     {
         var brand = _context.Brands.FirstOrDefault(x => x.Id == id);

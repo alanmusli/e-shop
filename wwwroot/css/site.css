@@ -1,6 +1,62 @@
 html {
   font-size: 14px;
 }
+:root {
+  --brand-red: #B31B1B;
+  --brand-blue: #1C1C84;
+  --brand-blue-dark: #12125A; 
+  --brand-red-dark: #8A1515;  
+  --brand-light: #F8F9FA;
+}
+
+.bistrejd-btn-red {
+  background-color: var(--brand-red);
+  color: white;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.bistrejd-btn-red:hover:not(:disabled) {
+  background-color: var(--brand-blue);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(28, 28, 132, 0.2);
+}
+
+.bistrejd-text-blue { color: var(--brand-blue); }
+.bistrejd-text-red { color: var(--brand-red); }
+
+.qty-btn { transition: all 0.2s; }
+.qty-btn:hover {
+  background-color: rgba(28, 28, 132, 0.1);
+  color: var(--brand-blue);
+}
+
+@media all and (min-width: 992px) {
+  .category-dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+  }
+
+  .dropdown-menu .dropdown-item:hover {
+    background-color: rgba(28, 28, 132, 0.05);
+    color: var(--brand-red) !important;
+    transform: translateX(4px); /* Мало поместување надесно */
+  }
+}
+
+.bistrejd-btn-outline-blue {
+  color: var(--brand-blue);
+  border: 1px solid rgba(28, 28, 132, 0.3);
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.bistrejd-btn-outline-blue:hover {
+  background-color: var(--brand-blue);
+  color: white;
+  border-color: var(--brand-blue);
+}
 
 @media (min-width: 768px) {
   html {

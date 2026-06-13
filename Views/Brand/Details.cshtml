@@ -38,20 +38,34 @@
 
                     <hr class="my-4 text-muted" />
 
-                    <div class="mb-4">
-                        <label class="form-label text-muted small text-uppercase tracking-wide fw-bold">Internal Routing Matrix</label>
-                        <div class="bg-light border p-3 rounded font-monospace small position-relative">
-                            <i class="bi bi-key-fill text-muted position-absolute end-0 top-50 translate-middle-y me-3"></i>
-                            <div class="text-secondary mb-1" style="font-size: 0.7rem;">SYSTEM RESOURCE IDENTIFIER:</div>
-                            <code class="text-primary fw-bold">brand-id://@Model.Name.ToLower().Replace(" ", "-")</code>
+                    
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="mb-4">
+                            <label class="form-label text-muted small text-uppercase tracking-wide fw-bold">Internal Routing Matrix</label>
+                            <div class="bg-light border p-3 rounded font-monospace small position-relative">
+                                <i class="bi bi-key-fill text-muted position-absolute end-0 top-50 translate-middle-y me-3"></i>
+                                <div class="text-secondary mb-1" style="font-size: 0.7rem;">SYSTEM RESOURCE IDENTIFIER:</div>
+                                <code class="text-primary fw-bold">brand-id://@Model.Name.ToLower().Replace(" ", "-")</code>
+                            </div>
                         </div>
-                    </div>
+                    }
+                    else
+                    {
+                        <div class="mb-4">
+                            <h6 class="text-secondary small text-uppercase fw-bold mb-2">Description</h6>
+                            <div class="bg-light p-3 rounded border text-secondary lh-base fs-6" style="white-space: pre-line; min-height: 120px;">
+                                    No specific administrative description or commercial logistics notes have been logged for this supplier entity record.
+                            </div>
+                        </div>
+                    }
 
-                    <div class="card bg-gradient border-0 p-3 text-white shadow-sm" style="background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%); border-radius: 12px;">
+                    <div class="card border-0 p-3 text-white shadow-sm" style="background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%); border-radius: 12px;">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
-                                <h6 class="text-white-50 small text-uppercase mb-1 fw-bold">Assigned Products</h6>
-                                <h3 class="mb-0 font-weight-bold fw-black">@associatedProductCount</h3>
+                                <h6 class="text-white-50 small text-uppercase mb-1 fw-bold tracking-wide">Assigned Products</h6>
+            
+                                <h3 class="mb-0 fw-bold fs-2 text-white">@associatedProductCount</h3>
                             </div>
                             <i class="bi bi-boxes text-white-50 fs-2"></i>
                         </div>

@@ -1,34 +1,140 @@
-@model Cart
+@model e_store.Models.Cart
 
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    ViewData["Title"] = "Active Cart Review";
+    int totalItems = Model?.CartItems?.Sum(ci => ci.Quantity) ?? 0;
+    decimal runningSubtotal = Model?.CartItems?.Sum(ci => ci.Quantity * (ci.Product?.Price ?? 0)) ?? 0;
 }
 
-<h2>Your Cart</h2>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+        <div>
+            <h1 class="display-6 fw-bold text-dark mb-1">Shopping Cart Matrix</h1>
+            <p class="text-muted mb-0">Review your selected items, modify inventory quantities, and finalize your order staging parameters.</p>
+        </div>
+        @if (totalItems > 0)
+        {
+            <form asp-action="ClearCart" method="post" asp-route-id="@Model.Id">
+                <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+                    <i class="bi bi-trash3 me-1"></i> Purge Entire Cart
+                </button>
+            </form>
+        }
+    </div>
 
-
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Created Date</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    @foreach (var item in @Model.CartItems)
+    @if (Model == null || Model.CartItems == null || !Model.CartItems.Any())
     {
-        <tr>
-            <td>@item.Product.Name</td>
-            <td>@item.Product.Description</td>
-            <td>@item.Product.Price</td>
-            <td>@item.Product.CreatedDate</td>
-        </tr>
+        <div class="card border-0 shadow-sm rounded-3 py-5 my-5 text-center bg-white">
+            <div class="card-body py-5">
+                <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center border mb-4 shadow-sm" style="width: 90px; height: 90px;">
+                    <i class="bi bi-cart-dash text-muted display-4"></i>
+                </div>
+                <h4 class="fw-bold text-secondary">Your Cart is Currently Empty</h4>
+                <p class="text-muted small max-width-400 mx-auto mb-4">You have not initialized any commercial product allocations into your session pipeline yet.</p>
+                <a asp-controller="Product" asp-action="Index" class="btn btn-primary px-4 py-2 fw-bold rounded-pill shadow-sm">
+                    <i class="bi bi-bag-plus-fill me-2"></i> Browse Product Catalog
+                </a>
+            </div>
+        </div>
     }
-    </tbody>
+    else
+    {
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+                    <div class="table-responsive">
+                        <table class="table align-middle mb-0 bg-white">
+                            <thead class="bg-light text-secondary small text-uppercase tracking-wider fw-bold border-bottom">
+                                <tr>
+                                    <th scope="col" class="ps-4 py-3" style="width: 50%;">Product Specifications</th>
+                                    <th scope="col" class="py-3 text-center" style="width: 20%;">Allocated Qty</th>
+                                    <th scope="col" class="py-3 text-end" style="width: 20%;">Extended Price</th>
+                                    <th scope="col" class="py-3 text-center" style="width: 10%;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.CartItems)
+                                {
+                                    var itemTotal = item.Quantity * (item.Product?.Price ?? 0);
+                                    <tr class="border-bottom">
+                                        <td class="ps-4 py-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="rounded bg-light border p-2 text-center me-3 d-flex align-items-center justify-content-center shadow-inner" style="width: 50px; height: 50px; min-width: 50px;">
+                                                    <i class="bi bi-box-seam text-secondary fs-4"></i>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0 fw-bold text-dark text-truncate" style="max-width: 260px;">@item.Product?.Name</h6>
+                                                    <span class="text-muted small d-block">Unit Price: @item.Product?.Price.ToString("F2") den</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        
+                                        <td class="text-center">
+                                            <form asp-action="UpdateQuantity" method="post" class="d-inline-flex align-items-center border rounded bg-light p-1" asp-route-id="@Model.Id">
+                                                <input type="hidden" name="itemId" value="@item.Id" />
+                                                <button type="submit" name="direction" value="down" class="btn btn-sm btn-link text-secondary p-0 px-2 text-decoration-none"><i class="bi bi-dash-lg"></i></button>
+                                                <span class="px-2 fw-bold text-dark font-monospace">@item.Quantity</span>
+                                                <button type="submit" name="direction" value="up" class="btn btn-sm btn-link text-secondary p-0 px-2 text-decoration-none"><i class="bi bi-plus-lg"></i></button>
+                                            </form>
+                                        </td>
+                                        
+                                        <td class="text-end fw-semibold text-dark font-monospace pe-3">
+                                            @itemTotal.ToString("F2")den
+                                        </td>
+                                        
+                                        <td class="text-center pe-4">
+                                            <form asp-action="RemoveItem" method="post">
+                                                <input type="hidden" name="itemId" value="@item.Id" />
+                                                <button type="submit" class="btn btn-link text-danger p-0" title="Revoke Item Allocation">
+                                                    <i class="bi bi-x-circle fs-5"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="mt-3">
+                    <a asp-controller="Products" asp-action="Index" class="btn btn-link text-decoration-none p-0">
+                        <i class="bi bi-arrow-left me-1"></i> Continue Shopping and Asset Procurement
+                    </a>
+                </div>
+            </div>
 
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-md rounded-3 text-dark position-sticky" style="top: 24px; background-color: #f8f9fc;">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-4 text-uppercase tracking-wider small text-secondary">Operational Summary</h5>
+                        
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Total Distinct Entities</span>
+                            <span class="fw-semibold font-monospace">@Model.CartItems.Count</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-muted">Gross Units Count</span>
+                            <span class="fw-semibold font-monospace">@totalItems</span>
+                        </div>
+                        
+                        <hr class="text-muted" />
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <span class="fw-bold text-dark fs-5">Staging Subtotal</span>
+                            <span class="fs-4 fw-black text-primary font-monospace">@runningSubtotal.ToString("F2") den</span>
+                        </div>
 
-</table>
+                        <a asp-controller="Order" asp-action="Checkout" class="btn btn-success btn-lg w-100 fw-bold shadow-sm transition-all hover-lift py-2.5 rounded-3 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-credit-card-2-back-fill me-2 fs-5"></i> Proceed to Order Dispatch
+                        </a>
+                        
+                        <div class="text-center mt-3">
+                            <span class="text-muted small font-monospace"><i class="bi bi-shield-lock-fill me-1 text-success"></i> Secure Framework Ledger Pipeline</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

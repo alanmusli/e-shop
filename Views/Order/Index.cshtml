@@ -1,53 +1,73 @@
-@model IEnumerable<e_store.Models.Order>
+@model IEnumerable<Order>
 
-@{
-    ViewData["Title"] = "Index";
-}
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-end mb-4 border-bottom pb-3">
+        <div>
+            <h2 class="fw-bold bistrejd-text-blue mb-1">Мои Нарачки</h2>
+            <p class="text-muted small mb-0">Преглед на вашата историја на купувања и статус на активни нарачки.</p>
+        </div>
+        <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+            <i class="bi bi-cart-plus me-1"></i> Ново Купување
+        </a>
+    </div>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderStatus)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderStatus)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5 bg-light rounded-3 shadow-sm border border-muted">
+            <i class="bi bi-receipt display-4 text-muted mb-3 d-block"></i>
+            <h5 class="text-secondary fw-bold">Немате претходни нарачки</h5>
+            <p class="text-muted small">Вашата историја на купување е празна.</p>
+        </div>
+    }
+    else
+    {
+        <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table align-middle table-hover mb-0">
+                    <thead class="bg-light text-secondary small text-uppercase tracking-wider fw-bold">
+                        <tr>
+                            <th class="ps-4 py-3">Број на Нарачка</th>
+                            <th class="py-3">Датум</th>
+                            <th class="py-3">Статус</th>
+                            <th class="py-3 text-end">Износ</th>
+                            <th class="py-3 text-center pe-4">Акции</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model)
+                        {
+                            <tr class="border-bottom">
+                                <td class="ps-4 py-3 font-monospace fw-bold bistrejd-text-blue">
+                                    #@order.Id.ToString("D5")
+                                </td>
+                                <td class="text-muted small">
+                                    @order.OrderDate.ToString("dd.MM.yyyy HH:mm")
+                                </td>
+                                <td>
+                                    @if (order.OrderStatus == "Pending")
+                                    {
+                                        <span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i> Во обработка</span>
+                                    }
+                                    else if (order.OrderStatus == "Shipped")
+                                    {
+                                        <span class="badge bg-info text-dark"><i class="bi bi-truck me-1"></i> Испорачана</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Завршена</span>
+                                    }
+                                </td>
+                                <td class="text-end fw-bold font-monospace" style="color: var(--brand-red);">
+                                    @order.TotalAmount.ToString("F2") ден
+                                </td>
+                                <td class="text-center pe-4">
+                                    <a href="#" class="btn btn-sm btn-light text-secondary border">Детали</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

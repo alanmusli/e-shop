@@ -15,9 +15,9 @@ public class Product
     public string? ImageUrl  { get; set; }
     public DateTime CreatedDate { get; set; }
     public bool IsActive { get; set; }
-    [Required]
+    
     [StringLength(20)]
-    public string SKU { get; set; }
+    public string? SKU { get; set; }
     
     public int? CategoryId { get; set; }
     public Category? Category { get; set; }

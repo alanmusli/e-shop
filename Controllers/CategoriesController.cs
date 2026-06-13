@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace e_store.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;

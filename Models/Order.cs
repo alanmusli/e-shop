@@ -5,12 +5,18 @@ public class Order
     public int Id { get; set; }
     
     public string? UserId { get; set; }
-    public ApplicationUser User { get; set; }
+    public ApplicationUser? User { get; set; }
+    
+    public string ShippingFirstName { get; set; }
+    public string ShippingLastName { get; set; }
+    public string ShippingAddress { get; set; }
+    public string ShippingCity { get; set; }
+    public string ShippingPhoneNumber { get; set; }
 
-    public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+    public ICollection<OrderDetail>? OrderDetails { get; set; } = new List<OrderDetail>();
     
     public decimal TotalAmount { get; set; }
     public DateTime OrderDate { get; set; }
-    public string OrderStatus { get; set; }
+    public string? OrderStatus { get; set; }
     
 }

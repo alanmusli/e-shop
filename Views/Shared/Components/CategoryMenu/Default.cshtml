@@ -1,0 +1,28 @@
+@model IEnumerable<Category>
+
+<li class="nav-item dropdown category-dropdown">
+    <a class="nav-link dropdown-toggle text-uppercase font-monospace fw-bold" style="font-size: 13px; color: var(--brand-blue);" href="#" id="navbarDropdownCategories" role="button" aria-expanded="false" >
+        Categories
+    </a>
+    <ul class="dropdown-menu shadow-lg border-0 mt-0" aria-labelledby="navbarDropdownCategories" style="border-radius: 8px; background-color: #f8f9fa;">
+        <a class="dropdown-item fw-medium py-2"
+           asp-controller="Product"
+           asp-action="Index"
+           asp-route-id="site"
+           style="color: var(--brand-blue); transition: all 0.2s;">
+           Сите продукти</a>
+        @foreach (var category in Model)
+        {
+            <li>
+                
+                <a class="dropdown-item fw-medium py-2"
+                   asp-controller="Product"
+                   asp-action="Index"
+                   asp-route-id="@category.Slug"
+                   style="color: var(--brand-blue); transition: all 0.2s;">
+                    @category.Name
+                </a>
+            </li>
+        }
+    </ul>
+</li>
