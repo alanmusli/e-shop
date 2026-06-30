@@ -10,6 +10,7 @@ public class Order
     public string ShippingFirstName { get; set; }
     public string ShippingLastName { get; set; }
     public string ShippingAddress { get; set; }
+    public string ShippingEmail { get; set; }
     public string ShippingCity { get; set; }
     public string ShippingPhoneNumber { get; set; }
 

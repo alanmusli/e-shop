@@ -369,6 +369,10 @@ namespace e_store.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ShippingEmail")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ShippingFirstName")
                         .IsRequired()
                         .HasColumnType("TEXT");

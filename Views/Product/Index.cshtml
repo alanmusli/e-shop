@@ -1,100 +1,100 @@
 
 @model IEnumerable<e_store.Models.Product>
-
-
-@if (User.IsInRole("Admin"))
-{
-    <div class="container mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2><i class="bi bi-box-seam me-2"></i>Product Inventory Dashboard</h2>
-            <a asp-action="Create" class="btn btn-primary">
-                <i class="bi bi-plus-circle me-1"></i> Add New Product
-            </a>
-        </div>
-
-        <div class="card shadow-sm">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light">
-                    <tr>
-                        <th>Product Name</th>
-                        <th>Brand</th>
-                        <th>Category Absolute Path</th>
-                        <th class="text-end">Price</th>
-                        <th class="text-center">Stock Level</th>
-                        <th class="text-end">Management Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                <strong>@item.Name</strong>
-                                <br/>
-                                <small class="text-muted text-monospace">@item.Category.Slug</small>
-                            </td>
-                            <td>@item.Brand?.Name</td>
-                            <td>
-                                <span class="badge bg-light text-dark border">
-                                    @item.Category?.Slug
-                                </span>
-                            </td>
-                            <td class="text-end fw-bold">$@item.Price.ToString("F2")</td>
-                            <td class="text-center">
-                                @if (item.InventoryCount == 0)
-                                {
-                                    <span class="badge bg-danger">Out of Stock</span>
-                                }
-                                else if (item.InventoryCount < 10)
-                                {
-                                    if (@User.IsInRole("Admin"))
-                                    {
-                                        <span class="badge bg-warning text-dark">Low Stock (@item.InventoryCount)</span>
-                                    }
-                                }
-                                else
-                                {
-                                    if (@User.IsInRole("Admin"))
-                                    {
-                                        <span class="badge bg-success">@item.InventoryCount Available</span>
-
-                                    }
-                                    else
-                                    {
-                                        <span class="badge bg-success">Available</span>
-                                    }
-                                }
-                            </td>
-                            <td class="text-end">
-                                <div class="btn-group btn-group-sm" role="group">
-                                    @if (User.IsInRole("Admin"))
-                                    {
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary" title="Edit Properties">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger" title="Remove Product">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
-                                    }
-                                    <a asp-action="Add" asp-controller="Cart" asp-route-id="@item.Id" class="btn btn-outline-info" title="Add To Cart">
-                                        <i class="bi bi-cart"></i>
-                                    </a>
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info" title="View Audit Details">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+@{
+    var currentSlug = ViewContext.RouteData.Values["slug"]?.ToString() ?? "all";
+    var currentBrand = ViewContext.RouteData.Values["brandName"]?.ToString().ToLower();
 }
-else
-{
+@* *@
+@* @if (User.IsInRole("Admin")) *@
+@* { *@
+@*     <div class="container mt-4"> *@
+@*         <div class="d-flex justify-content-between align-items-center mb-3"> *@
+@*             <h2><i class="bi bi-box-seam me-2"></i>Product Inventory Dashboard</h2> *@
+@*             <a asp-action="Create" asp-controller="Product" class="btn btn-primary"> *@
+@*                 <i class="bi bi-plus-circle me-1"></i> Add New Product *@
+@*             </a> *@
+@*         </div> *@
+@* *@
+@*         <div class="card shadow-sm"> *@
+@*             <div class="table-responsive"> *@
+@*                 <table class="table table-hover align-middle mb-0"> *@
+@*                     <thead class="table-light"> *@
+@*                     <tr> *@
+@*                         <th>Product Name</th> *@
+@*                         <th>Brand</th> *@
+@*                         <th>Category Absolute Path</th> *@
+@*                         <th class="text-end">Price</th> *@
+@*                         <th class="text-center">Stock Level</th> *@
+@*                         <th class="text-end">Management Actions</th> *@
+@*                     </tr> *@
+@*                     </thead> *@
+@*                     <tbody> *@
+@*                     @foreach (var item in Model) *@
+@*                     { *@
+@*                         <tr> *@
+@*                             <td> *@
+@*                                 <strong>@item.Name</strong> *@
+@*                                 <br/> *@
+@*                                 <small class="text-muted text-monospace">@item.Category.Slug</small> *@
+@*                             </td> *@
+@*                             <td>@item.Brand?.Name</td> *@
+@*                             <td> *@
+@*                                 <span class="badge bg-light text-dark border"> *@
+@*                                     @item.Category?.Slug *@
+@*                                 </span> *@
+@*                             </td> *@
+@*                             <td class="text-end fw-bold">$@item.Price.ToString("F2")</td> *@
+@*                             <td class="text-center"> *@
+@*                                 @if (item.InventoryCount == 0) *@
+@*                                 { *@
+@*                                     <span class="badge bg-danger">Out of Stock</span> *@
+@*                                 } *@
+@*                                 else if (item.InventoryCount < 10) *@
+@*                                 { *@
+@*                                     if (@User.IsInRole("Admin")) *@
+@*                                     { *@
+@*                                         <span class="badge bg-warning text-dark">Low Stock (@item.InventoryCount)</span> *@
+@*                                     } *@
+@*                                 } *@
+@*                                 else *@
+@*                                 { *@
+@*                                     if (@User.IsInRole("Admin")) *@
+@*                                     { *@
+@*                                         <span class="badge bg-success">@item.InventoryCount Available</span> *@
+@* *@
+@*                                     } *@
+@*                                 } *@
+@*                             </td> *@
+@*                             <td class="text-end"> *@
+@*                                 <div class="btn-group btn-group-sm" role="group"> *@
+@*                                     @if (User.IsInRole("Admin")) *@
+@*                                     { *@
+@*                                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary" title="Edit Properties"> *@
+@*                                             <i class="bi bi-pencil"></i> *@
+@*                                         </a> *@
+@*                                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger" title="Remove Product"> *@
+@*                                             <i class="bi bi-trash"></i> *@
+@*                                         </a> *@
+@*                                     } *@
+@*                                     <a asp-action="Add" asp-controller="Cart" asp-route-id="@item.Id" class="btn btn-outline-info" title="Add To Cart"> *@
+@*                                         <i class="bi bi-cart"></i> *@
+@*                                     </a> *@
+@*                                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info" title="View Audit Details"> *@
+@*                                         <i class="bi bi-eye"></i> *@
+@*                                     </a> *@
+@*                                 </div> *@
+@*                             </td> *@
+@*                         </tr> *@
+@*                     } *@
+@*                     </tbody> *@
+@*                 </table> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
+@* } *@
+@* else *@
+@* { *@
+@*      *@
     
 <div class="container my-5">
     <div class="d-flex justify-content-between align-items-end mb-4 border-bottom pb-3" style="border-color: rgba(28, 28, 132, 0.2) !important;">
@@ -104,11 +104,47 @@ else
         </div>
         
         <div class="d-none d-md-block">
-            <select class="form-select border-1 shadow-sm font-monospace small" style="border-color: rgba(28, 28, 132, 0.2); color: var(--brand-blue);">
-                <option>Сортирај по најнови</option>
-                <option>Цена: Растечка</option>
-                <option>Цена: Опаѓачка</option>
-            </select>
+            <form asp-controller="Product" asp-action="Index" 
+                  asp-route-slug="@currentSlug" 
+                  asp-route-brandName="@currentBrand" 
+                  method="get">
+        
+                @if (!string.IsNullOrEmpty(ViewBag.SearchQuery as string))
+                {
+                    <input type="hidden" name="searchQuery" value="@ViewBag.SearchQuery" />
+                }
+
+                <select name="sortOrder" onchange="this.form.submit();" class="form-select border-1 shadow-sm font-monospace small" style="border-color: rgba(28, 28, 132, 0.2); color: var(--brand-blue);">
+            
+                    @if (string.IsNullOrEmpty(ViewBag.CurrentSort) || ViewBag.CurrentSort == "newest")
+                    {
+                        <option value="newest" selected>Сортирај по најнови</option>
+                    }
+                    else
+                    {
+                        <option value="newest">Сортирај по најнови</option>
+                    }
+
+                    @if (ViewBag.CurrentSort == "price_asc")
+                    {
+                        <option value="price_asc" selected>Цена: Растечка</option>
+                    }
+                    else
+                    {
+                        <option value="price_asc">Цена: Растечка</option>
+                    }
+
+                    @if (ViewBag.CurrentSort == "price_desc")
+                    {
+                        <option value="price_desc" selected>Цена: Опаѓачка</option>
+                    }
+                    else
+                    {
+                        <option value="price_desc">Цена: Опаѓачка</option>
+                    }
+            
+                </select>
+            </form>
         </div>
     </div>
 
@@ -189,5 +225,3 @@ else
         color: white !important;
     }
 </style>
-
-}

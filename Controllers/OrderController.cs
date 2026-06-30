@@ -2,32 +2,37 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using e_store.Data;
 using e_store.Models;
+using e_store.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Hangfire;
 
 namespace e_store.Controllers
 {
-    [Authorize]
+ 
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IEmailService _emailService; 
 
-        public OrderController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public OrderController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IEmailService emailService)
         {
             _context = context;
             _userManager = userManager;
+            _emailService = emailService;
         }
 
         // GET: Order
+        [Authorize]
         public async Task<IActionResult> Index()
         {
-            // 2. ПОПРАВЕНО: Купувачот смее да ги гледа САМО СВОИТЕ нарачки!
             var userId = _userManager.GetUserId(User);
 
             var myOrders = await _context.Orders
@@ -97,15 +102,22 @@ namespace e_store.Controllers
                     });
                 }
 
+
+                order.OrderStatus = "new";
+                
                 _context.Orders.Add(order);
                 _context.CartItems.RemoveRange(cart.CartItems);
                 await _context.SaveChangesAsync();
-
+                
+                string emailBody = $"<h3>Успешна нарачка #{order.Id}!</h3><p>Вкупно: {order.TotalAmount} ден.</p>";
+                BackgroundJob.Enqueue(() => _emailService.SendEmailAsync(order.ShippingEmail, "Bistrejd Нарачка", emailBody));
+                
                 return RedirectToAction("Success", "Order", new { orderId = order.Id });
             }
             
             return View(order);
         }
+
         
         public IActionResult Success(int orderId)
         {

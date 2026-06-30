@@ -1,0 +1,187 @@
+@model IEnumerable<e_store.Models.Order>
+@{
+ViewData["Title"] = "Менаџирање со Нарачки";
+}
+
+<link href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
+
+<div class="container-fluid fade-in">
+    <div class="d-flex justify-content-between align-items-end mb-4 pb-3 border-bottom" style="border-color: rgba(28, 28, 132, 0.1) !important;">
+        <div>
+            <p class="text-uppercase font-monospace mb-1" style="color: var(--brand-red); font-weight: 700; font-size: 12px; letter-spacing: 1px;">
+                Администрација
+            </p>
+            <h2 class="fw-bold bistrejd-text-blue mb-0">Сите Нарачки</h2>
+        </div>
+        <div>
+            <button id="download-csv" class="btn btn-outline-secondary btn-sm rounded-pill px-4 fw-bold shadow-sm font-monospace" style="font-size: 12px;">
+                <i class="bi bi-filetype-csv me-1"></i> Експортирај CSV
+            </button>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px; background-color: var(--brand-light);">
+        <div class="card-body p-3">
+            <div class="row g-2 align-items-center">
+                <div class="col-md-4">
+                    <div class="input-group input-group-sm shadow-none">
+                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                        <input type="text" id="search-field" class="form-control border-start-0 ps-0" placeholder="Пребарај по Купувач или Телефон..." style="box-shadow: none;">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select id="status-filter" class="form-select form-select-sm text-muted shadow-none">
+                        <option value="">Сите Статуси</option>
+                        <option value="нова">Нова</option>
+                        <option value="во обработка">Во Обработка</option>
+                        <option value="пратена">Пратена</option>
+                        <option value="доставена">Доставена</option>
+                        <option value="откажана">Откажана</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button id="clear-filters" class="btn btn-light btn-sm w-100 text-muted border">Исчисти Филтри</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm p-3" style="border-radius: 16px; overflow: hidden;">
+        <div id="orders-table"></div>
+    </div>
+</div>
+
+
+@section Scripts {
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        
+        const dateFormatter = function(cell, formatterParams, onRendered){
+            const data = cell.getRow().getData();
+            return `<div class="fw-bold">${data.date}</div><div class="small text-muted" style="font-size: 11px;">${data.time} часот</div>`;
+        };
+
+        const customerFormatter = function(cell, formatterParams, onRendered){
+            const data = cell.getRow().getData();
+            return `<div class="fw-bold">${data.customerName}</div><div class="small text-muted"><i class="bi bi-telephone-fill me-1" style="font-size: 10px;"></i>${data.phone}</div>`;
+        };
+
+        const statusFormatter = function(cell, formatterParams, onRendered){
+            const rawValue = cell.getValue();
+
+            const val = rawValue ? rawValue.toLowerCase() : "нова";
+
+            let badgeClass = "bg-secondary text-secondary border-secondary";
+            let icon = "bi-circle";
+
+            if(val === "нова" || val === "new") { badgeClass = "bg-info text-info border-info"; icon = "bi-asterisk"; }
+            else if(val === "во обработка" || val === "processing") { badgeClass = "bg-warning text-warning border-warning"; icon = "bi-box-seam"; }
+            else if(val === "пратена" || val === "shipped") { badgeClass = "bg-primary text-primary border-primary"; icon = "bi-truck"; }
+            else if(val === "доставена" || val === "delivered") { badgeClass = "bg-success text-success border-success"; icon = "bi-check-circle"; }
+            else if(val === "откажана" || val === "canceled") { badgeClass = "bg-danger text-danger border-danger"; icon = "bi-x-circle"; }
+            
+            const displayString = rawValue ? rawValue.toUpperCase() : "НОВА";
+
+            return `<span class="badge ${badgeClass} bg-opacity-10 border rounded-pill px-3 py-2 fw-bold" style="font-size: 11px; letter-spacing: 0.5px;">
+                <i class="bi ${icon} me-1"></i> ${displayString}
+            </span>`;
+        };
+        
+        const actionFormatter = function(cell, formatterParams, onRendered){
+            const id = cell.getRow().getData().id;
+            const url = `@Url.Action("Details", "Order", new { area = "Admin" })/${id}`;
+            const url2 = `@Url.Action("Delivery", "Order", new { area = "Admin" })/${id}`;
+            return `
+                <a href="${url}" class="btn btn-sm btn-light text-primary border me-1" title="Преглед на нарачка">
+                    <i class="bi bi-eye-fill"></i>
+                </a>
+                <a href="${url2}" class="btn btn-sm btn-light text-success border" title="Означи како пратена">
+                    <i class="bi bi-truck"></i>
+                </a>
+            `;
+            
+        };
+        
+        const table = new Tabulator("#orders-table", {
+            ajaxURL: "/api/admin/orders", 
+            layout: "fitColumns",
+            responsiveLayout: "collapse",
+            pagination: "local",
+            paginationSize: 10,
+            paginationSizeSelector: [10, 25, 50, 100],
+            placeholder: "Нема пронајдено нарачки",
+            initialSort:[
+                {column:"id", dir:"desc"}
+            ],
+            columns: [
+                {title: "Нарачка ID", field: "id", width: 130, formatter: (c) => `<span class="fw-bold font-monospace" style="color: var(--brand-blue);">#ORD-${c.getValue()}</span>`},
+                {title: "Датум", field: "date", width: 150, formatter: dateFormatter, sorter: "date", sorterParams:{format:"dd MMM yyyy"}},
+                {title: "Купувач", field: "customerName", minWidth: 200, formatter: customerFormatter},
+                {title: "Износ", field: "amount", width: 140, cssClass: "fw-bold", hozAlign: "left"},
+                {title: "Статус", field: "statusLower", width: 170, hozAlign: "center", formatter: statusFormatter},
+                {title: "Акции", field: "actions", width: 100, hozAlign: "right", headerSort: false, formatter: actionFormatter}
+            ]
+        });
+
+        document.getElementById("search-field").addEventListener("input", function(){
+            table.setFilter("customerName", "like", this.value);
+        });
+
+        document.getElementById("status-filter").addEventListener("change", function(){
+            if(this.value === "") {
+                table.removeFilter("statusLower", "=", "");
+                table.clearFilter(); // Ако користиш повеќе филтри истовремено, ќе треба понапредна логика
+            } else {
+                table.setFilter("statusLower", "=", this.value);
+            }
+        });
+
+        document.getElementById("clear-filters").addEventListener("click", function(){
+            document.getElementById("search-field").value = "";
+            document.getElementById("status-filter").value = "";
+            table.clearFilter();
+        });
+
+        document.getElementById("download-csv").addEventListener("click", function(){
+            table.download("csv", "naracki_bistrejd.csv");
+        });
+    });
+</script>
+}
+
+<style>
+    .fade-in {
+        animation: fadeIn 0.4s ease-in;
+    }
+    @@keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .tabulator {
+        border: none !important;
+        background-color: transparent !important;
+    }
+    .tabulator-header {
+        background-color: #f8fafc !important;
+        border-bottom: 2px solid rgba(28, 28, 132, 0.05) !important;
+        color: #6c757d;
+        text-transform: uppercase;
+        font-family: monospace;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+    }
+    .tabulator-row {
+        border-bottom: 1px solid rgba(28, 28, 132, 0.05) !important;
+        padding: 0.5rem 0;
+        transition: all 0.2s ease;
+    }
+    .tabulator-row:hover {
+        background-color: #f8fafc !important;
+    }
+    .tabulator-cell {
+        display: flex;
+        align-items: center;
+    }
+</style>

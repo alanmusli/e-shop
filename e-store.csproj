@@ -1,12 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>e_store</RootNamespace>
-    </PropertyGroup>
+      <UserSecretsId>112c8108-dba6-4a35-9ad3-b9a8f9bc3318</UserSecretsId>
+  </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Hangfire.AspNetCore" Version="1.8.23" />
+      <PackageReference Include="Hangfire.InMemory" Version="1.0.0" />
       <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.8" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.8" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.8" />
@@ -21,6 +24,39 @@
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
       <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Areas\Admin\Views\AdminContact\Details.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\AdminContact\Index.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Brand\Add.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Brand\Details.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Brand\Index.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Categories\Create.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Categories\Delete.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Categories\Details.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Categories\Edit.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Categories\Index.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Categories\_CategoryRow.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Home\Index.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Home\Privacy.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Order\Checkout.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Order\Create.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Order\Delete.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Order\Details.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Order\Edit.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Order\Index.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Order\Success.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Product\Create.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Product\Delete.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Product\Details.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Product\Edit.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Product\Index.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Shared\Components\CategoryMenu\Default.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Shared\Error.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Shared\_LoginPartial.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Shared\_ValidationScriptsPartial.cshtml" />
     </ItemGroup>
 
 </Project>

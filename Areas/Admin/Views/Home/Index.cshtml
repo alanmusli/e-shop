@@ -1,0 +1,181 @@
+﻿@model e_store.Areas.Admin.Models.ViewModels.HomeInfo
+@{
+    ViewData["Title"] = "Почетна";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="container-fluid fade-in">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+        <div>
+            <h2 class="fw-bold bistrejd-text-blue mb-1">Добредојде назад, Админ!</h2>
+            <p class="text-muted small">Еве што се случува со вашиот бизнис денес.</p>
+        </div>
+        <div>
+            <button class="btn btn-outline-primary btn-sm rounded-pill px-3 me-2">
+                <i class="bi bi-download me-1"></i> Извештај
+            </button>
+            <a asp-area="Admin" asp-controller="Product" asp-action="Create" class="btn bistrejd-btn-red btn-sm rounded-pill px-3 shadow-sm">
+                <i class="bi bi-plus-circle me-1"></i> Нов Продукт
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100 p-3" style="border-radius: 16px; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <p class="text-uppercase font-monospace text-muted mb-1" style="font-size: 11px; font-weight: 700;">Вкупна Продажба</p>
+                        <h3 class="fw-bold mb-0">@Model.totalSale</h3>
+                        <small class="text-success fw-bold"><i class="bi bi-arrow-up-short"></i> +12%</small>
+                    </div>
+                    <div class="bg-primary bg-opacity-10 p-2 rounded-3">
+                        <i class="bi bi-currency-dollar fs-4 text-primary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100 p-3" style="border-radius: 16px;">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <p class="text-uppercase font-monospace text-muted mb-1" style="font-size: 11px; font-weight: 700;">Нови Нарачки</p>
+                        <h3 class="fw-bold mb-0">@Model.allOrders</h3>
+                        <small class="text-warning fw-bold"><i class="bi bi-clock"></i></small>
+                    </div>
+                    <div class="bg-warning bg-opacity-10 p-2 rounded-3">
+                        <i class="bi bi-cart-check fs-4 text-warning"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100 p-3" style="border-radius: 16px;">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <p class="text-uppercase font-monospace text-muted mb-1" style="font-size: 11px; font-weight: 700;">Продукти</p>
+                        <h3 class="fw-bold mb-0">@Model.productCount</h3>
+                        <small class="text-danger fw-bold"><i class="bi bi-exclamation-triangle"></i> 5 критично</small>
+                    </div>
+                    <div class="bg-danger bg-opacity-10 p-2 rounded-3">
+                        <i class="bi bi-box-seam fs-4 text-danger"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100 p-3" style="border-radius: 16px;">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <p class="text-uppercase font-monospace text-muted mb-1" style="font-size: 11px; font-weight: 700;">Нови Пораки</p>
+                        <h3 class="fw-bold mb-0">@Model.messages</h3>
+                        <small class="text-info fw-bold"><i class="bi bi-envelope"></i> Од Контакт</small>
+                    </div>
+                    <div class="bg-info bg-opacity-10 p-2 rounded-3">
+                        <i class="bi bi-chat-dots fs-4 text-info"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm p-4" style="border-radius: 16px;">
+                <h5 class="fw-bold bistrejd-text-blue mb-4 d-flex align-items-center">
+                    <i class="bi bi-receipt me-2"></i> Најнови Нарачки
+                </h5>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr style="font-size: 12px; color: #64748b;">
+                                <th class="border-0 px-3">ID</th>
+                                <th class="border-0">КУПУВАЧ</th>
+                                <th class="border-0">ДАТУМ</th>
+                                <th class="border-0 text-end">ИЗНОС</th>
+                                <th class="border-0 text-center">СТАТУС</th>
+                            </tr>
+                        </thead>
+                        <tbody style="font-size: 14px;">
+                        
+                        @foreach (var item in Model.notProccessed)
+                        {
+                            <tr>
+                                <td class="px-3 font-monospace fw-bold"># @item.Id</td>
+                                <td>@item.ShippingFirstName @item.ShippingLastName</td>
+                                <td>@item.OrderDate</td>
+                                <td class="text-end fw-bold">@item.TotalAmount ден.</td>
+                                <td class="text-center"><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">@item.OrderStatus</span></td>
+                            </tr>
+                        }
+                        </tbody>
+                        
+                    </table>
+                </div>
+                <div class="text-center mt-4">
+                    <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="btn btn-light btn-sm font-monospace text-uppercase fw-bold px-4" style="font-size: 11px;">Види ги сите нарачки</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm p-4 h-100" style="border-radius: 16px; background-color: var(--brand-blue); color: white;">
+                <h5 class="fw-bold mb-4">Брзи Акции</h5>
+                <div class="d-grid gap-3">
+                    <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-outline-light border-0 text-start p-3 bg-white bg-opacity-10 d-flex align-items-center rounded-3">
+                        <i class="bi bi-box-fill fs-4 me-3"></i>
+                        <div>
+                            <div class="fw-bold small">Менаџирај Лагер</div>
+                            <div class="small opacity-50" style="font-size: 11px;">Промени залиха и цени</div>
+                        </div>
+                    </a>
+                    <a asp-area="Admin" asp-controller="AdminContact" asp-action="Index" class="btn btn-outline-light border-0 text-start p-3 bg-white bg-opacity-10 d-flex align-items-center rounded-3">
+                        <i class="bi bi-chat-square-text fs-4 me-3"></i>
+                        <div>
+                            <div class="fw-bold small">Одговори на пораки</div>
+                            <div class="small opacity-50" style="font-size: 11px;">8 нерешени прашања</div>
+                        </div>
+                    </a>
+                    <a asp-area="Admin" asp-controller="Categories" asp-action="Index" class="btn btn-outline-light border-0 text-start p-3 bg-white bg-opacity-10 d-flex align-items-center rounded-3">
+                        <i class="bi bi-tags-fill fs-4 me-3"></i>
+                        <div>
+                            <div class="fw-bold small">Категории</div>
+                            <div class="small opacity-50" style="font-size: 11px;">Ажурирај ги типовите алати</div>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="mt-auto pt-4">
+                    <div class="p-3 bg-white bg-opacity-10 rounded-3 border-start border-4 border-danger">
+                        <p class="mb-1 small fw-bold text-danger"><i class="bi bi-lightning-fill"></i> Инфо</p>
+                        <p class="mb-0 small opacity-75" style="font-size: 12px;">5 продукти се под критичен лагер. Потребно е нарачување од добавувачи.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .fade-in {
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    @@keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(28, 28, 132, 0.08) !important;
+    }
+</style>

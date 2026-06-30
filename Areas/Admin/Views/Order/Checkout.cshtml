@@ -1,0 +1,63 @@
+@model Order
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm" style="border-radius: 16px;">
+                <div class="card-header bg-white border-bottom p-4" style="border-color: rgba(28, 28, 132, 0.08) !important;">
+                    <h3 class="fw-bold bistrejd-text-blue mb-0">Детали за достава</h3>
+                    <p class="text-muted small mb-0 mt-1">Ве молиме пополнете ги точните информации за испорака на вашата адреса.</p>
+                </div>
+                
+                <div class="card-body p-4 p-md-5">
+                    <form asp-action="Checkout" asp-controller="Order" method="post">
+                        
+                        <div class="mb-4">
+                            <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Име</label>
+                            <input type="text" asp-for="@Model.ShippingFirstName" class="form-control bg-light border-0 py-2 px-3 shadow-none" style="border-radius: 8px;" required placeholder="Пр. Петар Петровски" />
+                            <span asp-validation-for="@Model.ShippingFirstName" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Презиме</label>
+                            <input type="text" asp-for="@Model.ShippingLastName" class="form-control bg-light border-0 py-2 px-3 shadow-none" style="border-radius: 8px;" required placeholder="Пр. Петар Петровски" />
+                            <span asp-validation-for="@Model.ShippingLastName"  class="text-danger small"></span>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-8 mb-4">
+                                <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Улица и Број</label>
+                                <input type="text" asp-for="@Model.ShippingAddress" class="form-control bg-light border-0 py-2 px-3 shadow-none" style="border-radius: 8px;" required placeholder="Пр. Партизански Одреди 15/3" />
+                                <span asp-validation-for="@Model.ShippingAddress" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Град</label>
+                                <input type="text" asp-for="@Model.ShippingCity" class="form-control bg-light border-0 py-2 px-3 shadow-none" style="border-radius: 8px;" required placeholder="Пр. Скопје" />
+                                <span asp-validation-for="@Model.ShippingCity" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Телефонски Број</label>
+                            <input type="tel" asp-for="@Model.ShippingPhoneNumber" class="form-control bg-light border-0 py-2 px-3 shadow-none" style="border-radius: 8px;" required placeholder="Пр. 070 123 456" />
+                            <span asp-validation-for="@Model.ShippingPhoneNumber" class="text-danger small"></span>
+                        </div>
+
+                        <div class="bg-light p-3 rounded mb-4 border" style="border-color: rgba(28, 28, 132, 0.1) !important;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted fw-bold font-monospace small text-uppercase">Начин на плаќање</span>
+                                <span class="badge bg-secondary">Во готово при достава</span>
+                            </div>
+                        </div>
+
+                        <div class="d-grid mt-5">
+                            <button type="submit" class="btn bistrejd-btn-red btn-lg py-3 fw-bold text-uppercase shadow-sm" style="border-radius: 8px; font-size: 15px;">
+                                <i class="bi bi-check2-circle me-2 fs-5"></i> Потврди Нарачка
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

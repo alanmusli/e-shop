@@ -2,141 +2,285 @@
 
 @model ContactFormViewModel
 
-
+    @* *@
+    @* <div class="container mt-2 mb-5"> *@
+    @*     <div class="text-center mb-4"> *@
+    @*         <p class="font-monospace small text-uppercase tracking-wider mb-1" style="color: var(--brand-red); font-weight: 700;">Контакт центар</p> *@
+    @*         <h2 class="fw-bold mb-3 bistrejd-text-blue" style="letter-spacing: -0.5px;">Имате прашање или сакате соработка?</h2> *@
+    @*         <p class="text-muted mx-auto" style="max-width: 600px;"> *@
+    @*             Нашиот тим е тука да ви помогне во секое време. Испратете директна порака или искористете ги официјалните канали. *@
+    @*         </p> *@
+    @*     </div> *@
+    @* *@
+    @*     <div class="row g-4 justify-content-center"> *@
+    @*         <div class="col-lg-6 col-md-7"> *@
+    @*             <div class="card border-0 shadow-sm p-4 h-100 d-flex flex-column" style="background-color: #ffffff; border-radius: 16px;"> *@
+    @*                 <div class="card-body d-flex flex-column flex-grow-1 p-0"> *@
+    @*                     <h5 class="fw-bold mb-4 d-flex align-items-center bistrejd-text-blue"> *@
+    @*                         <i class="bi bi-envelope-open-fill me-3" style="color: var(--brand-red);"></i>Испратете порака *@
+    @*                     </h5> *@
+    @* *@
+    @*                     @if (TempData["SuccessMessage"] != null) *@
+    @*                     { *@
+    @*                         <div class="alert alert-success bg-success bg-opacity-10 border-success text-success mb-4 d-flex align-items-center" style="border-radius: 8px;"> *@
+    @*                             <i class="bi bi-check-circle-fill me-2 fs-4"></i> *@
+    @*                             <div class="fw-medium">@TempData["SuccessMessage"]</div> *@
+    @*                         </div> *@
+    @*                     } *@
+    @* *@
+    @*                     <form asp-action="Index" asp-controller="Contact" method="post" class="d-flex flex-column flex-grow-1"> *@
+    @*                         <div class="row"> *@
+    @*                             <div class="col-md-6 mb-3"> *@
+    @*                                 <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Име и презиме</label> *@
+    @*                                 <input type="text" asp-for="@Model.FullName" class="form-control bg-light border-0 py-2 px-3 shadow-none" *@
+    @*                                        style="border-radius: 8px; color: var(--brand-blue);" placeholder="Петар Петровски" required/> *@
+    @*                             </div> *@
+    @*                             <div class="col-md-6 mb-3"> *@
+    @*                                 <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Е-пошта (Email)</label> *@
+    @*                                 <input type="email" asp-for="@Model.Email" class="form-control bg-light border-0 py-2 px-3 shadow-none" *@
+    @*                                        style="border-radius: 8px; color: var(--brand-blue);" placeholder="petar@example.com" required/> *@
+    @*                             </div> *@
+    @*                         </div> *@
+    @* *@
+    @*                         <div class="mb-3"> *@
+    @*                             <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Наслов на пораката</label> *@
+    @*                             <input type="text" asp-for="@Model.Subject" class="form-control bg-light border-0 py-2 px-3 shadow-none" *@
+    @*                                    style="border-radius: 8px; color: var(--brand-blue);" placeholder="Прашање за нарачка, лагер..." required/> *@
+    @*                         </div> *@
+    @* *@
+    @*                         <div class="mb-4 flex-grow-1 d-flex flex-column"> *@
+    @*                             <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Вашата порака</label> *@
+    @*                             <textarea asp-for="@Model.Message" class="form-control bg-light border-0 px-3 flex-grow-1 shadow-none" rows="5"  *@
+    @*                                   style="border-radius: 8px; color: var(--brand-blue); min-height: 120px;" placeholder="Внесете ги деталите на вашата порака тука..." required></textarea> *@
+    @*                         </div> *@
+    @* *@
+    @*                         <button type="submit" class="btn w-100 fw-bold text-uppercase tracking-wider py-3 mt-auto bistrejd-btn-red shadow-sm" *@
+    @*                                 style="border-radius: 8px; font-size: 14px;"> *@
+    @*                             <i class="bi bi-send-fill me-2"></i> Испрати Директно *@
+    @*                         </button> *@
+    @*                     </form> *@
+    @*                 </div> *@
+    @*             </div> *@
+    @*         </div> *@
+    @* *@
+    @*         <div class="col-lg-4 col-md-5"> *@
+    @*             <div class="card border-0 shadow-sm h-100 d-flex flex-column justify-content-between p-4" style="background-color: var(--brand-light); border-radius: 16px; border: 1px solid rgba(28, 28, 132, 0.05) !important;"> *@
+    @*                 <div> *@
+    @*                     <h5 class="fw-bold mb-4 d-flex align-items-center bistrejd-text-blue"> *@
+    @*                         <i class="bi bi-info-circle-fill me-3" style="color: var(--brand-red);"></i>Информации за бизнисот *@
+    @*                     </h5> *@
+    @*                     <p class="text-muted small lh-lg mb-4"> *@
+    @*                         Апликацијата е оптимизирана за реални пазарни услови. Доколку имате потреба од итна поддршка, искористете ги следниве канали: *@
+    @*                     </p> *@
+    @* *@
+    @*                     <div class="d-flex align-items-center mb-4"> *@
+    @*                         <div class="bg-white rounded-circle shadow-sm d-flex align-items-center justify-content-center me-3" style="width: 46px; height: 46px; min-width: 46px; border: 1px solid rgba(28, 28, 132, 0.05);"> *@
+    @*                             <i class="bi bi-geo-alt-fill bistrejd-text-blue"></i> *@
+    @*                         </div> *@
+    @*                         <div> *@
+    @*                             <div class="text-uppercase font-monospace fw-bold" style="font-size: 10px; letter-spacing: 0.5px; color: var(--brand-red);">Главно седиште</div> *@
+    @*                             <div class="fw-bold small bistrejd-text-blue">бул. Партизански Одреди 27, Центар, ТЦ Буњаковец, Скопје</div> *@
+    @*                         </div> *@
+    @*                     </div> *@
+    @* *@
+    @*                     <div class="d-flex align-items-center mb-4"> *@
+    @*                         <div class="bg-white rounded-circle shadow-sm d-flex align-items-center justify-content-center me-3" style="width: 46px; height: 46px; min-width: 46px; border: 1px solid rgba(28, 28, 132, 0.05);"> *@
+    @*                             <i class="bi bi-telephone-fill bistrejd-text-blue"></i> *@
+    @*                         </div> *@
+    @*                         <div> *@
+    @*                             <div class="text-uppercase font-monospace fw-bold" style="font-size: 10px; letter-spacing: 0.5px; color: var(--brand-red);">Телефон за поддршка</div> *@
+    @*                             <div class="fw-bold small font-monospace bistrejd-text-blue">+389 (02) 3121 303</div> *@
+    @*                         </div> *@
+    @*                     </div> *@
+    @* *@
+    @*                     <div class="d-flex align-items-start mb-4"> *@
+    @*                         <div class="bg-white rounded-circle shadow-sm d-flex align-items-center justify-content-center me-3 mt-1" style="width: 46px; height: 46px; min-width: 46px; border: 1px solid rgba(28, 28, 132, 0.05);"> *@
+    @*                             <i class="bi bi-clock-fill bistrejd-text-blue"></i> *@
+    @*                         </div> *@
+    @*                         <div class="w-100 pe-2"> *@
+    @*                             <div class="text-uppercase font-monospace fw-bold mb-2" style="font-size: 10px; letter-spacing: 0.5px; color: var(--brand-red);">Работно време</div> *@
+    @* *@
+    @*                             <div class="d-flex justify-content-between fw-bold small border-bottom pb-1 mb-1 bistrejd-text-blue" style="border-color: rgba(28, 28, 132, 0.1) !important;"> *@
+    @*                                 <span>Пон - Пет:</span> *@
+    @*                                 <span class="font-monospace">08:00 - 17:00ч</span> *@
+    @*                             </div> *@
+    @* *@
+    @*                             <div class="d-flex justify-content-between fw-bold small border-bottom pb-1 mb-1 bistrejd-text-blue" style="border-color: rgba(28, 28, 132, 0.1) !important;"> *@
+    @*                                 <span>Сабота:</span> *@
+    @*                                 <span class="font-monospace">08:00 - 16:00ч</span> *@
+    @*                             </div> *@
+    @* *@
+    @*                             <div class="d-flex justify-content-between fw-bold small" style="color: var(--brand-red);"> *@
+    @*                                 <span>Недела:</span> *@
+    @*                                 <span>Неработен ден</span> *@
+    @*                             </div> *@
+    @*                         </div> *@
+    @*                     </div> *@
+    @* *@
+    @*                     <div class="mt-4 mb-2 overflow-hidden shadow-sm" style="height: 220px; border-radius: 12px; border: 1px solid rgba(28, 28, 132, 0.1);"> *@
+    @*                         <iframe *@
+    @*                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5930.1455294512925!2d21.421667199999998!3d41.9987139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1354144c0e2f02d7%3A0xbe6c0d1e6ae3fe3c!2sBis%20Trejd%20%2CHardware%20story%2Csanitary!5e0!3m2!1sen!2smk!4v1781352644311!5m2!1sen!2smk" *@
+    @*                             width="100%" *@
+    @*                             height="100%" *@
+    @*                             style="border:0;" *@
+    @*                             allowfullscreen="" *@
+    @*                             loading="lazy" *@
+    @*                             referrerpolicy="no-referrer-when-downgrade"> *@
+    @*                         </iframe> *@
+    @*                     </div> *@
+    @*                 </div> *@
+    @* *@
+    @*                 <div class="p-3 bg-white rounded mt-3 shadow-sm border-start border-4" style="border-color: var(--brand-blue) !important;"> *@
+    @*                     <p class="text-muted mb-0" style="font-size: 11px; line-height: 1.4;"> *@
+    @*                         <i class="bi bi-shield-check me-1 bistrejd-text-blue"></i> Сите пораки испратени преку оваа форма автоматски се зачувуваат во администраторскиот заштитен панел. *@
+    @*                     </p> *@
+    @*                 </div> *@
+    @*             </div> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </div> *@
+    @* *@
+    
+    
     <div class="container mt-2 mb-5">
-        <div class="text-center mb-4">
-            <p class="font-monospace small text-uppercase tracking-wider mb-1" style="color: var(--brand-red); font-weight: 700;">Контакт центар</p>
-            <h2 class="fw-bold mb-3 bistrejd-text-blue" style="letter-spacing: -0.5px;">Имате прашање или сакате соработка?</h2>
-            <p class="text-muted mx-auto" style="max-width: 600px;">
-                Нашиот тим е тука да ви помогне во секое време. Испратете директна порака или искористете ги официјалните канали.
-            </p>
+    <div class="text-center mb-4">
+        <p class="font-monospace small text-uppercase tracking-wider mb-1" style="color: var(--brand-red); font-weight: 700;">Контакт центар</p>
+        <h2 class="fw-bold mb-3 bistrejd-text-blue" style="letter-spacing: -0.5px;">Имате прашање или сакате соработка?</h2>
+        <p class="text-muted mx-auto" style="max-width: 600px;">
+            Нашиот тим е тука да ви помогне во секое време. Испратете директна порака или искористете ги официјалните канали.
+        </p>
+    </div>
+
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-10">
+            <div class="overflow-hidden shadow-sm" style="height: 400px; border-radius: 16px; border: 1px solid rgba(28, 28, 132, 0.1);">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5930.1455294512925!2d21.421667199999998!3d41.9987139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1354144c0e2f02d7%3A0xbe6c0d1e6ae3fe3c!2sBis%20Trejd%20%2CHardware%20story%2Csanitary!5e0!3m2!1sen!2smk!4v1781458722996!5m2!1sen!2smk" 
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
         </div>
+    </div>
 
-        <div class="row g-4 justify-content-center">
-            <div class="col-lg-6 col-md-7">
-                <div class="card border-0 shadow-sm p-4 h-100 d-flex flex-column" style="background-color: #ffffff; border-radius: 16px;">
-                    <div class="card-body d-flex flex-column flex-grow-1 p-0">
-                        <h5 class="fw-bold mb-4 d-flex align-items-center bistrejd-text-blue">
-                            <i class="bi bi-envelope-open-fill me-3" style="color: var(--brand-red);"></i>Испратете порака
-                        </h5>
+    <div class="row g-4 justify-content-center">
+        <div class="col-lg-6 col-md-7">
+            <div class="card border-0 shadow-sm p-4 h-100 d-flex flex-column" style="background-color: #ffffff; border-radius: 16px;">
+                <div class="card-body d-flex flex-column flex-grow-1 p-0">
+                    <h5 class="fw-bold mb-4 d-flex align-items-center bistrejd-text-blue">
+                        <i class="bi bi-envelope-open-fill me-3" style="color: var(--brand-red);"></i>Испратете порака
+                    </h5>
 
-                        @if (TempData["SuccessMessage"] != null)
-                        {
-                            <div class="alert alert-success bg-success bg-opacity-10 border-success text-success mb-4 d-flex align-items-center" style="border-radius: 8px;">
-                                <i class="bi bi-check-circle-fill me-2 fs-4"></i>
-                                <div class="fw-medium">@TempData["SuccessMessage"]</div>
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success bg-success bg-opacity-10 border-success text-success mb-4 d-flex align-items-center" style="border-radius: 8px;">
+                            <i class="bi bi-check-circle-fill me-2 fs-4"></i>
+                            <div class="fw-medium">@TempData["SuccessMessage"]</div>
+                        </div>
+                    }
+
+                    <form asp-action="Index" asp-controller="Contact" method="post" class="d-flex flex-column flex-grow-1">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Име и презиме</label>
+                                <input type="text" asp-for="@Model.FullName" class="form-control bg-light border-0 py-2 px-3 shadow-none"
+                                       style="border-radius: 8px; color: var(--brand-blue);" placeholder="Петар Петровски" required/>
                             </div>
-                        }
-
-                        <form asp-action="Index" asp-controller="Contact" method="post" class="d-flex flex-column flex-grow-1">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Име и презиме</label>
-                                    <input type="text" asp-for="@Model.FullName" class="form-control bg-light border-0 py-2 px-3 shadow-none"
-                                           style="border-radius: 8px; color: var(--brand-blue);" placeholder="Петар Петровски" required/>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Е-пошта (Email)</label>
-                                    <input type="email" asp-for="@Model.Email" class="form-control bg-light border-0 py-2 px-3 shadow-none"
-                                           style="border-radius: 8px; color: var(--brand-blue);" placeholder="petar@example.com" required/>
-                                </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Е-пошта (Email)</label>
+                                <input type="email" asp-for="@Model.Email" class="form-control bg-light border-0 py-2 px-3 shadow-none"
+                                       style="border-radius: 8px; color: var(--brand-blue);" placeholder="petar@example.com" required/>
                             </div>
+                        </div>
 
-                            <div class="mb-3">
-                                <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Наслов на пораката</label>
-                                <input type="text" asp-for="@Model.Subject" class="form-control bg-light border-0 py-2 px-3 shadow-none"
-                                       style="border-radius: 8px; color: var(--brand-blue);" placeholder="Прашање за нарачка, лагер..." required/>
-                            </div>
+                        <div class="mb-3">
+                            <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Наслов на пораката</label>
+                            <input type="text" asp-for="@Model.Subject" class="form-control bg-light border-0 py-2 px-3 shadow-none"
+                                   style="border-radius: 8px; color: var(--brand-blue);" placeholder="Прашање за нарачка, лагер..." required/>
+                        </div>
 
-                            <div class="mb-4 flex-grow-1 d-flex flex-column">
-                                <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Вашата порака</label>
-                                <textarea asp-for="@Model.Message" class="form-control bg-light border-0 px-3 flex-grow-1 shadow-none" rows="5" 
-                                      style="border-radius: 8px; color: var(--brand-blue); min-height: 120px;" placeholder="Внесете ги деталите на вашата порака тука..." required></textarea>
-                            </div>
+                        <div class="mb-4 flex-grow-1 d-flex flex-column">
+                            <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Вашата порака</label>
+                            <textarea asp-for="@Model.Message" class="form-control bg-light border-0 px-3 flex-grow-1 shadow-none" rows="5" 
+                                  style="border-radius: 8px; color: var(--brand-blue); min-height: 120px;" placeholder="Внесете ги деталите на вашата порака тука..." required></textarea>
+                        </div>
 
-                            <button type="submit" class="btn w-100 fw-bold text-uppercase tracking-wider py-3 mt-auto bistrejd-btn-red shadow-sm"
-                                    style="border-radius: 8px; font-size: 14px;">
-                                <i class="bi bi-send-fill me-2"></i> Испрати Директно
-                            </button>
-                        </form>
-                    </div>
+                        <button type="submit" class="btn w-100 fw-bold text-uppercase tracking-wider py-3 mt-auto bistrejd-btn-red shadow-sm"
+                                style="border-radius: 8px; font-size: 14px;">
+                            <i class="bi bi-send-fill me-2"></i> Испрати Директно
+                        </button>
+                    </form>
                 </div>
             </div>
+        </div>
 
-            <div class="col-lg-4 col-md-5">
-                <div class="card border-0 shadow-sm h-100 d-flex flex-column justify-content-between p-4" style="background-color: var(--brand-light); border-radius: 16px; border: 1px solid rgba(28, 28, 132, 0.05) !important;">
-                    <div>
-                        <h5 class="fw-bold mb-4 d-flex align-items-center bistrejd-text-blue">
-                            <i class="bi bi-info-circle-fill me-3" style="color: var(--brand-red);"></i>Информации за бизнисот
-                        </h5>
-                        <p class="text-muted small lh-lg mb-4">
-                            Апликацијата е оптимизирана за реални пазарни услови. Доколку имате потреба од итна поддршка, искористете ги следниве канали:
-                        </p>
+        <div class="col-lg-4 col-md-5">
+            <div class="card border-0 shadow-sm h-100 d-flex flex-column justify-content-between p-4" style="background-color: var(--brand-light); border-radius: 16px; border: 1px solid rgba(28, 28, 132, 0.05) !important;">
+                <div>
+                    <h5 class="fw-bold mb-4 d-flex align-items-center bistrejd-text-blue">
+                        <i class="bi bi-info-circle-fill me-3" style="color: var(--brand-red);"></i>Информации за бизнисот
+                    </h5>
+                    <p class="text-muted small lh-lg mb-4">
+                        Апликацијата е оптимизирана за реални пазарни услови. Доколку имате потреба од итна поддршка, искористете ги следниве канали:
+                    </p>
 
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="bg-white rounded-circle shadow-sm d-flex align-items-center justify-content-center me-3" style="width: 46px; height: 46px; min-width: 46px; border: 1px solid rgba(28, 28, 132, 0.05);">
-                                <i class="bi bi-geo-alt-fill bistrejd-text-blue"></i>
-                            </div>
-                            <div>
-                                <div class="text-uppercase font-monospace fw-bold" style="font-size: 10px; letter-spacing: 0.5px; color: var(--brand-red);">Главно седиште</div>
-                                <div class="fw-bold small bistrejd-text-blue">бул. Партизански Одреди 27, Центар, ТЦ Буњаковец, Скопје</div>
-                            </div>
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-white rounded-circle shadow-sm d-flex align-items-center justify-content-center me-3" style="width: 46px; height: 46px; min-width: 46px; border: 1px solid rgba(28, 28, 132, 0.05);">
+                            <i class="bi bi-geo-alt-fill bistrejd-text-blue"></i>
                         </div>
-
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="bg-white rounded-circle shadow-sm d-flex align-items-center justify-content-center me-3" style="width: 46px; height: 46px; min-width: 46px; border: 1px solid rgba(28, 28, 132, 0.05);">
-                                <i class="bi bi-telephone-fill bistrejd-text-blue"></i>
-                            </div>
-                            <div>
-                                <div class="text-uppercase font-monospace fw-bold" style="font-size: 10px; letter-spacing: 0.5px; color: var(--brand-red);">Телефон за поддршка</div>
-                                <div class="fw-bold small font-monospace bistrejd-text-blue">+389 (02) 3121 303</div>
-                            </div>
-                        </div>
-
-                        <div class="d-flex align-items-start mb-4">
-                            <div class="bg-white rounded-circle shadow-sm d-flex align-items-center justify-content-center me-3 mt-1" style="width: 46px; height: 46px; min-width: 46px; border: 1px solid rgba(28, 28, 132, 0.05);">
-                                <i class="bi bi-clock-fill bistrejd-text-blue"></i>
-                            </div>
-                            <div class="w-100 pe-2">
-                                <div class="text-uppercase font-monospace fw-bold mb-2" style="font-size: 10px; letter-spacing: 0.5px; color: var(--brand-red);">Работно време</div>
-
-                                <div class="d-flex justify-content-between fw-bold small border-bottom pb-1 mb-1 bistrejd-text-blue" style="border-color: rgba(28, 28, 132, 0.1) !important;">
-                                    <span>Пон - Пет:</span>
-                                    <span class="font-monospace">08:00 - 17:00ч</span>
-                                </div>
-
-                                <div class="d-flex justify-content-between fw-bold small border-bottom pb-1 mb-1 bistrejd-text-blue" style="border-color: rgba(28, 28, 132, 0.1) !important;">
-                                    <span>Сабота:</span>
-                                    <span class="font-monospace">08:00 - 16:00ч</span>
-                                </div>
-
-                                <div class="d-flex justify-content-between fw-bold small" style="color: var(--brand-red);">
-                                    <span>Недела:</span>
-                                    <span>Неработен ден</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-4 mb-2 overflow-hidden shadow-sm" style="height: 220px; border-radius: 12px; border: 1px solid rgba(28, 28, 132, 0.1);">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5930.1455294512925!2d21.421667199999998!3d41.9987139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1354144c0e2f02d7%3A0xbe6c0d1e6ae3fe3c!2sBis%20Trejd%20%2CHardware%20story%2Csanitary!5e0!3m2!1sen!2smk!4v1781352644311!5m2!1sen!2smk"
-                                width="100%"
-                                height="100%"
-                                style="border:0;"
-                                allowfullscreen=""
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade">
-                            </iframe>
+                        <div>
+                            <div class="text-uppercase font-monospace fw-bold" style="font-size: 10px; letter-spacing: 0.5px; color: var(--brand-red);">Главно седиште</div>
+                            <div class="fw-bold small bistrejd-text-blue">бул. Партизански Одреди 27, Центар, ТЦ Буњаковец, Скопје</div>
                         </div>
                     </div>
 
-                    <div class="p-3 bg-white rounded mt-3 shadow-sm border-start border-4" style="border-color: var(--brand-blue) !important;">
-                        <p class="text-muted mb-0" style="font-size: 11px; line-height: 1.4;">
-                            <i class="bi bi-shield-check me-1 bistrejd-text-blue"></i> Сите пораки испратени преку оваа форма автоматски се зачувуваат во администраторскиот заштитен панел.
-                        </p>
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-white rounded-circle shadow-sm d-flex align-items-center justify-content-center me-3" style="width: 46px; height: 46px; min-width: 46px; border: 1px solid rgba(28, 28, 132, 0.05);">
+                            <i class="bi bi-telephone-fill bistrejd-text-blue"></i>
+                        </div>
+                        <div>
+                            <div class="text-uppercase font-monospace fw-bold" style="font-size: 10px; letter-spacing: 0.5px; color: var(--brand-red);">Телефон за поддршка</div>
+                            <div class="fw-bold small font-monospace bistrejd-text-blue">+389 (02) 3121 303</div>
+                        </div>
                     </div>
+
+                    <div class="d-flex align-items-start mb-4">
+                        <div class="bg-white rounded-circle shadow-sm d-flex align-items-center justify-content-center me-3 mt-1" style="width: 46px; height: 46px; min-width: 46px; border: 1px solid rgba(28, 28, 132, 0.05);">
+                            <i class="bi bi-clock-fill bistrejd-text-blue"></i>
+                        </div>
+                        <div class="w-100 pe-2">
+                            <div class="text-uppercase font-monospace fw-bold mb-2" style="font-size: 10px; letter-spacing: 0.5px; color: var(--brand-red);">Работно време</div>
+
+                            <div class="d-flex justify-content-between fw-bold small border-bottom pb-1 mb-1 bistrejd-text-blue" style="border-color: rgba(28, 28, 132, 0.1) !important;">
+                                <span>Пон - Пет:</span>
+                                <span class="font-monospace">08:00 - 17:00ч</span>
+                            </div>
+
+                            <div class="d-flex justify-content-between fw-bold small border-bottom pb-1 mb-1 bistrejd-text-blue" style="border-color: rgba(28, 28, 132, 0.1) !important;">
+                                <span>Сабота:</span>
+                                <span class="font-monospace">08:00 - 16:00ч</span>
+                            </div>
+
+                            <div class="d-flex justify-content-between fw-bold small" style="color: var(--brand-red);">
+                                <span>Недела:</span>
+                                <span>Неработен ден</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-3 bg-white rounded mt-3 shadow-sm border-start border-4" style="border-color: var(--brand-blue) !important;">
+                    <p class="text-muted mb-0" style="font-size: 11px; line-height: 1.4;">
+                        <i class="bi bi-shield-check me-1 bistrejd-text-blue"></i> Ќе се обидеме да ве услужиме во најкраток можен рок.
+                    </p>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
 

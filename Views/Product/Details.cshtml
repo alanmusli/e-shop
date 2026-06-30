@@ -1,167 +1,160 @@
 
 @model e_store.Models.Product
 
+@* *@
+@* *@
+@* @if (User.IsInRole("Admin")) *@
+@* { *@
+@* *@
+@*     <div class="container my-5"> *@
+@*         <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom" style="border-color: rgba(28, 28, 132, 0.1) !important;"> *@
+@*             <a asp-action="Index" class="text-decoration-none fw-bold font-monospace small text-uppercase bistrejd-text-blue" style="transition: opacity 0.3s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'"> *@
+@*                 <i class="bi bi-arrow-left me-2"></i>Назад кон каталогот *@
+@*             </a> *@
+@*             <span class="badge font-monospace px-3 py-2" style="background-color: rgba(28, 28, 132, 0.08); color: var(--brand-blue);"> *@
+@*                 INTERNAL REF ID: #@Model.Id.ToString("D3") *@
+@*             </span> *@
+@*         </div> *@
+@* *@
+@*         <div class="card shadow-sm border-0" style="border-radius: 16px; overflow: hidden; background-color: #ffffff;"> *@
+@*             <div class="card-body p-4 p-md-5"> *@
+@*                 <div class="row g-5 align-items-center"> *@
+@* *@
+@*                     <div class="col-lg-5"> *@
+@*                         <div class="position-relative rounded-4 p-5 d-flex flex-column justify-content-center align-items-center h-100" *@
+@*                              style="background-color: var(--brand-light); border: 1px dashed rgba(28, 28, 132, 0.2); min-height: 400px;"> *@
+@* *@
+@*                             @if (Model.InventoryCount == 0) *@
+@*                             { *@
+@*                                 <span class="badge bg-danger position-absolute top-0 start-0 m-4 px-3 py-2 shadow-sm font-monospace text-uppercase" style="font-size: 11px; letter-spacing: 1px;"> *@
+@*                                     Распродадено *@
+@*                                 </span> *@
+@*                             } *@
+@*                             else *@
+@*                             { *@
+@*                                 <span class="badge position-absolute top-0 start-0 m-4 px-3 py-2 shadow-sm font-monospace text-uppercase" style="background-color: var(--brand-blue); font-size: 11px; letter-spacing: 1px;"> *@
+@*                                     На залиха *@
+@*                                 </span> *@
+@*                             } *@
+@* *@
+@*                             <i class="bi bi-image display-1 mb-3" style="color: var(--brand-blue); opacity: 0.3;"></i> *@
+@*                             <h6 class="fw-bold bistrejd-text-blue">Asset Image Stream Canvas</h6> *@
+@*                             <p class="text-muted small mb-0 text-center">File persistence drivers targeting <br/><strong>Step 3.3 Pipelines</strong>.</p> *@
+@*                         </div> *@
+@*                     </div> *@
+@* *@
+@*                     <div class="col-lg-7 d-flex flex-column"> *@
+@* *@
+@*                         <div class="d-flex flex-wrap align-items-center gap-2 mb-3"> *@
+@*                             <span class="badge border px-3 py-1 font-monospace small text-uppercase" style="color: var(--brand-red); border-color: var(--brand-red) !important; background-color: transparent;"> *@
+@*                                 @Model.SKU *@
+@*                             </span> *@
+@*                             <span class="badge px-3 py-1 font-monospace small text-uppercase" style="background-color: rgba(28, 28, 132, 0.08); color: var(--brand-blue);"> *@
+@*                                 @Model.Brand?.Name *@
+@*                             </span> *@
+@*                             <span class="text-muted small font-monospace ms-auto"> *@
+@*                                 <i class="bi bi-link-45deg"></i> <code class="bistrejd-text-blue">/catalog/@Model.Category?.Slug</code> *@
+@*                             </span> *@
+@*                         </div> *@
+@* *@
+@*                         <h1 class="display-6 fw-bold mb-2 bistrejd-text-blue" style="letter-spacing: -0.5px;">@Model.Name</h1> *@
+@*                         <p class="text-muted small mb-4"> *@
+@*                             <i class="bi bi-folder2-open me-1"></i> Категорија: <strong class="bistrejd-text-blue">@Model.Category?.Name</strong> *@
+@*                         </p> *@
+@* *@
+@*                         <div class="mb-4 d-flex align-items-baseline gap-2"> *@
+@*                             <span class="display-5 fw-bold bistrejd-text-red">@Model.Price.ToString("F2") den</span> *@
+@*                             <span class="text-muted small">/ Unit Market Price</span> *@
+@*                         </div> *@
+@* *@
+@*                         <div class="mb-4 p-3 rounded-3" style="background-color: var(--brand-light); border-left: 4px solid var(--brand-blue);"> *@
+@*                             <h6 class="text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Warehouse Ledger</h6> *@
+@*                             @if (Model.InventoryCount == 0) *@
+@*                             { *@
+@*                                 <span class="text-danger fw-bold small"> *@
+@*                                     <i class="bi bi-exclamation-triangle-fill me-1"></i>Out of Stock Allocation *@
+@*                                 </span> *@
+@*                             } *@
+@*                             else *@
+@*                             { *@
+@*                                 @if (User.IsInRole("Admin")) *@
+@*                                 { *@
+@*                                     <span class="bistrejd-text-blue fw-medium small"> *@
+@*                                         <i class="bi bi-box-seam me-1"></i> <strong>@Model.InventoryCount</strong> units initialized in stock *@
+@*                                     </span> *@
+@*                                 } *@
+@*                                 else *@
+@*                                 { *@
+@*                                     <span class="bistrejd-text-blue fw-medium small"> *@
+@*                                         <i class="bi bi-check-circle-fill me-1"></i> Available for order *@
+@*                                     </span> *@
+@*                                 } *@
+@*                             } *@
+@*                         </div> *@
+@* *@
+@*                         @if (Model.InventoryCount > 0) *@
+@*                         { *@
+@*                             <div class="p-4 rounded-4 border mt-auto shadow-sm" style="border-color: rgba(28, 28, 132, 0.1) !important; background-color: #fff;"> *@
+@*                                 <form asp-controller="Cart" asp-action="Add" method="post" id="cartForm"> *@
+@*                                     <input type="hidden" name="productId" value="@Model.Id"/> *@
+@* *@
+@*                                     <div class="row g-3 align-items-end"> *@
+@*                                         <div class="col-md-4"> *@
+@*                                             <label for="quantityInput" class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 10px; color: var(--brand-blue);">Quantity</label> *@
+@*                                             <div class="input-group border rounded-3 bg-white" style="border-color: #dee2e6 !important;"> *@
+@*                                                 <button class="btn btn-link text-secondary border-0 px-3 py-2 text-decoration-none qty-btn" type="button" onclick="adjustQty(-1)"> *@
+@*                                                     <i class="bi bi-dash-lg"></i> *@
+@*                                                 </button> *@
+@*                                                 <input type="number" id="quantityInput" name="quantity" *@
+@*                                                        class="form-control bg-transparent border-0 text-center fw-bold px-0 shadow-none fs-5 bistrejd-text-blue" *@
+@*                                                        value="1" min="1" max="@Model.InventoryCount" readonly style="pointer-events: none;"/> *@
+@*                                                 <button class="btn btn-link text-secondary border-0 px-3 py-2 text-decoration-none qty-btn" type="button" onclick="adjustQty(1)"> *@
+@*                                                     <i class="bi bi-plus-lg"></i> *@
+@*                                                 </button> *@
+@*                                             </div> *@
+@*                                         </div> *@
+@* *@
+@*                                         <div class="col-md-8"> *@
+@*                                             <button type="submit" class="btn w-100 fw-bold text-uppercase tracking-wider py-3 d-flex align-items-center justify-content-center bistrejd-btn-red" style="border-radius: 8px; font-size: 14px;"> *@
+@*                                                 <i class="bi bi-cart-plus-fill me-2 fs-5"></i> Add to Active Order *@
+@*                                             </button> *@
+@*                                         </div> *@
+@*                                     </div> *@
+@*                                 </form> *@
+@*                             </div> *@
+@*                         } *@
+@* *@
+@*                         <div class="mt-5 pt-4 border-top" style="border-color: rgba(28, 28, 132, 0.1) !important;"> *@
+@*                             <h6 class="fw-bold text-uppercase font-monospace mb-3 bistrejd-text-blue" style="font-size: 12px; letter-spacing: 0.5px;"> *@
+@*                                 <i class="bi bi-file-text me-2"></i>Operational Description Notes *@
+@*                             </h6> *@
+@*                             <p class="text-muted small" style="line-height: 1.8; white-space: pre-line;"> *@
+@*                                 @(string.IsNullOrWhiteSpace(Model.Description) ? "No supplemental manufacturer data sheets logged for this asset." : Model.Description) *@
+@*                             </p> *@
+@*                         </div> *@
+@* *@
+@*                     </div> *@
+@*                 </div> *@
+@*             </div> *@
+@* *@
+@*             @if (User.IsInRole("Admin")) *@
+@*             { *@
+@*                 <div class="card-footer d-flex justify-content-end py-3 px-4 border-top-0" style="background-color: var(--brand-light);"> *@
+@*                     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm px-4 rounded-pill fw-bold" style="background-color: white; color: var(--brand-blue); border: 1px solid var(--brand-blue); box-shadow: 0 2px 4px rgba(0,0,0,0.05);"> *@
+@*                         <i class="bi bi-pencil-square me-2"></i> Modify Asset Record *@
+@*                     </a> *@
+@*                 </div> *@
+@*             } *@
+@*         </div> *@
+@*     </div> *@
+@* } *@
 
-
-@if (User.IsInRole("Admin"))
-{
-
-    <div class="container my-5">
-        <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom" style="border-color: rgba(28, 28, 132, 0.1) !important;">
-            <a asp-action="Index" class="text-decoration-none fw-bold font-monospace small text-uppercase bistrejd-text-blue" style="transition: opacity 0.3s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
-                <i class="bi bi-arrow-left me-2"></i>Назад кон каталогот
-            </a>
-            <span class="badge font-monospace px-3 py-2" style="background-color: rgba(28, 28, 132, 0.08); color: var(--brand-blue);">
-                INTERNAL REF ID: #@Model.Id.ToString("D3")
-            </span>
-        </div>
-
-        <div class="card shadow-sm border-0" style="border-radius: 16px; overflow: hidden; background-color: #ffffff;">
-            <div class="card-body p-4 p-md-5">
-                <div class="row g-5 align-items-center">
-
-                    <div class="col-lg-5">
-                        <div class="position-relative rounded-4 p-5 d-flex flex-column justify-content-center align-items-center h-100"
-                             style="background-color: var(--brand-light); border: 1px dashed rgba(28, 28, 132, 0.2); min-height: 400px;">
-
-                            @if (Model.InventoryCount == 0)
-                            {
-                                <span class="badge bg-danger position-absolute top-0 start-0 m-4 px-3 py-2 shadow-sm font-monospace text-uppercase" style="font-size: 11px; letter-spacing: 1px;">
-                                    Распродадено
-                                </span>
-                            }
-                            else
-                            {
-                                <span class="badge position-absolute top-0 start-0 m-4 px-3 py-2 shadow-sm font-monospace text-uppercase" style="background-color: var(--brand-blue); font-size: 11px; letter-spacing: 1px;">
-                                    На залиха
-                                </span>
-                            }
-
-                            <i class="bi bi-image display-1 mb-3" style="color: var(--brand-blue); opacity: 0.3;"></i>
-                            <h6 class="fw-bold bistrejd-text-blue">Asset Image Stream Canvas</h6>
-                            <p class="text-muted small mb-0 text-center">File persistence drivers targeting <br/><strong>Step 3.3 Pipelines</strong>.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-7 d-flex flex-column">
-
-                        <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
-                            <span class="badge border px-3 py-1 font-monospace small text-uppercase" style="color: var(--brand-red); border-color: var(--brand-red) !important; background-color: transparent;">
-                                @Model.SKU
-                            </span>
-                            <span class="badge px-3 py-1 font-monospace small text-uppercase" style="background-color: rgba(28, 28, 132, 0.08); color: var(--brand-blue);">
-                                @Model.Brand?.Name
-                            </span>
-                            <span class="text-muted small font-monospace ms-auto">
-                                <i class="bi bi-link-45deg"></i> <code class="bistrejd-text-blue">/catalog/@Model.Category?.Slug</code>
-                            </span>
-                        </div>
-
-                        <h1 class="display-6 fw-bold mb-2 bistrejd-text-blue" style="letter-spacing: -0.5px;">@Model.Name</h1>
-                        <p class="text-muted small mb-4">
-                            <i class="bi bi-folder2-open me-1"></i> Категорија: <strong class="bistrejd-text-blue">@Model.Category?.Name</strong>
-                        </p>
-
-                        <div class="mb-4 d-flex align-items-baseline gap-2">
-                            <span class="display-5 fw-bold bistrejd-text-red">@Model.Price.ToString("F2") den</span>
-                            <span class="text-muted small">/ Unit Market Price</span>
-                        </div>
-
-                        <div class="mb-4 p-3 rounded-3" style="background-color: var(--brand-light); border-left: 4px solid var(--brand-blue);">
-                            <h6 class="text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Warehouse Ledger</h6>
-                            @if (Model.InventoryCount == 0)
-                            {
-                                <span class="text-danger fw-bold small">
-                                    <i class="bi bi-exclamation-triangle-fill me-1"></i>Out of Stock Allocation
-                                </span>
-                            }
-                            else
-                            {
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <span class="bistrejd-text-blue fw-medium small">
-                                        <i class="bi bi-box-seam me-1"></i> <strong>@Model.InventoryCount</strong> units initialized in stock
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span class="bistrejd-text-blue fw-medium small">
-                                        <i class="bi bi-check-circle-fill me-1"></i> Available for order
-                                    </span>
-                                }
-                            }
-                        </div>
-
-                        @if (Model.InventoryCount > 0)
-                        {
-                            <div class="p-4 rounded-4 border mt-auto shadow-sm" style="border-color: rgba(28, 28, 132, 0.1) !important; background-color: #fff;">
-                                <form asp-controller="Cart" asp-action="Add" method="post" id="cartForm">
-                                    <input type="hidden" name="productId" value="@Model.Id"/>
-
-                                    <div class="row g-3 align-items-end">
-                                        <div class="col-md-4">
-                                            <label for="quantityInput" class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 10px; color: var(--brand-blue);">Quantity</label>
-                                            <div class="input-group border rounded-3 bg-white" style="border-color: #dee2e6 !important;">
-                                                <button class="btn btn-link text-secondary border-0 px-3 py-2 text-decoration-none qty-btn" type="button" onclick="adjustQty(-1)">
-                                                    <i class="bi bi-dash-lg"></i>
-                                                </button>
-                                                <input type="number" id="quantityInput" name="quantity"
-                                                       class="form-control bg-transparent border-0 text-center fw-bold px-0 shadow-none fs-5 bistrejd-text-blue"
-                                                       value="1" min="1" max="@Model.InventoryCount" readonly style="pointer-events: none;"/>
-                                                <button class="btn btn-link text-secondary border-0 px-3 py-2 text-decoration-none qty-btn" type="button" onclick="adjustQty(1)">
-                                                    <i class="bi bi-plus-lg"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-8">
-                                            <button type="submit" class="btn w-100 fw-bold text-uppercase tracking-wider py-3 d-flex align-items-center justify-content-center bistrejd-btn-red" style="border-radius: 8px; font-size: 14px;">
-                                                <i class="bi bi-cart-plus-fill me-2 fs-5"></i> Add to Active Order
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        }
-
-                        <div class="mt-5 pt-4 border-top" style="border-color: rgba(28, 28, 132, 0.1) !important;">
-                            <h6 class="fw-bold text-uppercase font-monospace mb-3 bistrejd-text-blue" style="font-size: 12px; letter-spacing: 0.5px;">
-                                <i class="bi bi-file-text me-2"></i>Operational Description Notes
-                            </h6>
-                            <p class="text-muted small" style="line-height: 1.8; white-space: pre-line;">
-                                @(string.IsNullOrWhiteSpace(Model.Description) ? "No supplemental manufacturer data sheets logged for this asset." : Model.Description)
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            @if (User.IsInRole("Admin"))
-            {
-                <div class="card-footer d-flex justify-content-end py-3 px-4 border-top-0" style="background-color: var(--brand-light);">
-                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm px-4 rounded-pill fw-bold" style="background-color: white; color: var(--brand-blue); border: 1px solid var(--brand-blue); box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                        <i class="bi bi-pencil-square me-2"></i> Modify Asset Record
-                    </a>
-                </div>
-            }
-        </div>
-    </div>
-}
-else
-{
 <div class="container my-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <a asp-controller="Home" asp-action="Index" class="text-decoration-none fw-bold small text-uppercase bistrejd-text-blue" style="transition: opacity 0.3s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
             <i class="bi bi-arrow-left me-2"></i>Назад кон каталогот
         </a>
         
-        @if (User.IsInRole("Admin"))
-        {
-            <span class="badge font-monospace px-3 py-2" style="background-color: rgba(28, 28, 132, 0.08); color: var(--brand-blue);">
-                <i class="bi bi-shield-lock-fill me-1"></i> ADMIN REF: #@Model.Id.ToString("D3") | SKU: @Model.SKU
-            </span>
-        }
     </div>
 
     <div class="card shadow-sm border-0" style="border-radius: 16px; overflow: hidden; background-color: #ffffff;">
@@ -289,7 +282,6 @@ else
 </div>
 
 
-}
 
 @section Scripts
 {
@@ -306,4 +298,5 @@ else
             }
         }
     </script>
+
 }

@@ -1,11 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "YWtSm0Fmipc=",
+  "dgSpecHash": "4vZ1RpB8sh4=",
   "success": true,
   "projectFilePath": "/Users/alanmusli/RiderProjects/e-store/e-store/e-store.csproj",
   "expectedPackageFiles": [
     "/Users/alanmusli/.nuget/packages/azure.core/1.47.1/azure.core.1.47.1.nupkg.sha512",
     "/Users/alanmusli/.nuget/packages/azure.identity/1.14.2/azure.identity.1.14.2.nupkg.sha512",
+    "/Users/alanmusli/.nuget/packages/hangfire.aspnetcore/1.8.23/hangfire.aspnetcore.1.8.23.nupkg.sha512",
+    "/Users/alanmusli/.nuget/packages/hangfire.core/1.8.23/hangfire.core.1.8.23.nupkg.sha512",
+    "/Users/alanmusli/.nuget/packages/hangfire.inmemory/1.0.0/hangfire.inmemory.1.0.0.nupkg.sha512",
+    "/Users/alanmusli/.nuget/packages/hangfire.netcore/1.8.23/hangfire.netcore.1.8.23.nupkg.sha512",
     "/Users/alanmusli/.nuget/packages/humanizer/2.14.1/humanizer.2.14.1.nupkg.sha512",
     "/Users/alanmusli/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/alanmusli/.nuget/packages/humanizer.core.af/2.14.1/humanizer.core.af.2.14.1.nupkg.sha512",
@@ -161,6 +165,18 @@
       "warningLevel": 1,
       "filePath": "/Users/alanmusli/RiderProjects/e-store/e-store/e-store.csproj",
       "libraryId": "NuGet.Protocol",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'SQLitePCLRaw.lib.e_sqlite3' 2.1.11 has a known high severity vulnerability, https://github.com/advisories/GHSA-2m69-gcr7-jv3q",
+      "projectPath": "/Users/alanmusli/RiderProjects/e-store/e-store/e-store.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/alanmusli/RiderProjects/e-store/e-store/e-store.csproj",
+      "libraryId": "SQLitePCLRaw.lib.e_sqlite3",
       "targetGraphs": [
         "net10.0"
       ]

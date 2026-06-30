@@ -13,15 +13,20 @@
                     <form asp-action="Checkout" asp-controller="Order" method="post">
                         
                         <div class="mb-4">
-                            <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Име и Презиме</label>
+                            <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Име</label>
                             <input type="text" asp-for="@Model.ShippingFirstName" class="form-control bg-light border-0 py-2 px-3 shadow-none" style="border-radius: 8px;" required placeholder="Пр. Петар Петровски" />
                             <span asp-validation-for="@Model.ShippingFirstName" class="text-danger small"></span>
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Име и Презиме</label>
+                            <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Презиме</label>
                             <input type="text" asp-for="@Model.ShippingLastName" class="form-control bg-light border-0 py-2 px-3 shadow-none" style="border-radius: 8px;" required placeholder="Пр. Петар Петровски" />
                             <span asp-validation-for="@Model.ShippingLastName"  class="text-danger small"></span>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label text-uppercase font-monospace fw-bold mb-2" style="font-size: 11px; color: var(--brand-blue);">Е-адреса</label>
+                            <input type="text" asp-for="@Model.ShippingEmail" class="form-control bg-light border-0 py-2 px-3 shadow-none" style="border-radius: 8px;" required placeholder="example@example.com" />
+                            <span asp-validation-for="@Model.ShippingEmail"  class="text-danger small"></span>
                         </div>
                         
                         <div class="row">

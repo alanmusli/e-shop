@@ -1,97 +1,97 @@
+@* $1$ @model e_store.Models.Category #1# *@
+@* $1$ #1# *@
+@* $1$ @{ #1# *@
+@* $1$     ViewData["Title"] = "Edit"; #1# *@
+@* $1$ } #1# *@
+@* $1$ #1# *@
+@* $1$ <h1>Edit</h1> #1# *@
+@* $1$ #1# *@
+@* $1$ <h4>Category</h4> #1# *@
+@* $1$ <hr /> #1# *@
+@* $1$ <div class="row"> #1# *@
+@* $1$     <div class="col-md-4"> #1# *@
+@* $1$         <form asp-action="Edit"> #1# *@
+@* $1$             <div asp-validation-summary="ModelOnly" class="text-danger"></div> #1# *@
+@* $1$             <input type="hidden" asp-for="Id" /> #1# *@
+@* $1$             <div class="form-group"> #1# *@
+@* $1$                 <label asp-for="Name" class="control-label"></label> #1# *@
+@* $1$                 <input asp-for="Name" class="form-control" /> #1# *@
+@* $1$                 <span asp-validation-for="Name" class="text-danger"></span> #1# *@
+@* $1$             </div> #1# *@
+@* $1$             <div class="form-group"> #1# *@
+@* $1$                 <label asp-for="Description" class="control-label"></label> #1# *@
+@* $1$                 <input asp-for="Description" class="form-control" /> #1# *@
+@* $1$                 <span asp-validation-for="Description" class="text-danger"></span> #1# *@
+@* $1$             </div> #1# *@
+@* $1$             <div class="form-group"> #1# *@
+@* $1$                 <label asp-for="Slug" class="control-label"></label> #1# *@
+@* $1$                 <input asp-for="Slug" class="form-control" /> #1# *@
+@* $1$                 <span asp-validation-for="Slug" class="text-danger"></span> #1# *@
+@* $1$             </div> #1# *@
+@* $1$             <div class="form-group"> #1# *@
+@* $1$                 <label asp-for="ParentCategoryId" class="control-label"></label> #1# *@
+@* $1$                 <select asp-for="ParentCategoryId" class="form-control" asp-items="ViewBag.ParentCategoryId"></select> #1# *@
+@* $1$                 <span asp-validation-for="ParentCategoryId" class="text-danger"></span> #1# *@
+@* $1$             </div> #1# *@
+@* $1$             <div class="form-group"> #1# *@
+@* $1$                 <input type="submit" value="Save" class="btn btn-primary" /> #1# *@
+@* $1$             </div> #1# *@
+@* $1$         </form> #1# *@
+@* $1$     </div> #1# *@
+@* $1$ </div> #1# *@
+@* $1$ #1# *@
+@* $1$ <div> #1# *@
+@* $1$     <a asp-action="Index">Back to List</a> #1# *@
+@* $1$ </div> #1# *@
+@* $1$ #1# *@
+@* *@
+@* *@
 @* @model e_store.Models.Category *@
 @* *@
-@* @{ *@
-@*     ViewData["Title"] = "Edit"; *@
-@* } *@
+@* <div class="container mt-4" style="max-width: 650px;"> *@
+@*     <div class="card shadow-sm border-warning"> *@
+@*         <div class="card-header bg-warning text-dark py-3"> *@
+@*             <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Modify Branch Parameters</h5> *@
+@*         </div> *@
+@*         <div class="card-body p-4"> *@
+@*             <form asp-action="Edit" method="post"> *@
+@*                 <div asp-validation-summary="ModelOnly" class="alert alert-danger small d-none"></div> *@
+@*                  *@
+@*                 <input type="hidden" asp-for="Id" /> *@
+@*                 <input type="hidden" asp-for="Slug" /> *@
 @* *@
-@* <h1>Edit</h1> *@
+@*                 <div class="mb-3"> *@
+@*                     <label asp-for="Name" class="form-label fw-bold">Category Display Title</label> *@
+@*                     <input asp-for="Name" class="form-control" /> *@
+@*                     <span asp-validation-for="Name" class="text-danger small"></span> *@
+@*                 </div> *@
 @* *@
-@* <h4>Category</h4> *@
-@* <hr /> *@
-@* <div class="row"> *@
-@*     <div class="col-md-4"> *@
-@*         <form asp-action="Edit"> *@
-@*             <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
-@*             <input type="hidden" asp-for="Id" /> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="Name" class="control-label"></label> *@
-@*                 <input asp-for="Name" class="form-control" /> *@
-@*                 <span asp-validation-for="Name" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="Description" class="control-label"></label> *@
-@*                 <input asp-for="Description" class="form-control" /> *@
-@*                 <span asp-validation-for="Description" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="Slug" class="control-label"></label> *@
-@*                 <input asp-for="Slug" class="form-control" /> *@
-@*                 <span asp-validation-for="Slug" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="ParentCategoryId" class="control-label"></label> *@
-@*                 <select asp-for="ParentCategoryId" class="form-control" asp-items="ViewBag.ParentCategoryId"></select> *@
-@*                 <span asp-validation-for="ParentCategoryId" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <input type="submit" value="Save" class="btn btn-primary" /> *@
-@*             </div> *@
-@*         </form> *@
+@*                 <div class="mb-3"> *@
+@*                     <label asp-for="ParentCategoryId" class="form-label fw-bold">Relational Parent Shift Target</label> *@
+@*                     <select asp-for="ParentCategoryId" class="form-select" asp-items="ViewBag.ParentCategoryId"> *@
+@*                         <option value="-1">-- None (Move to Top-Level Root Shelf) --</option> *@
+@*                     </select> *@
+@*                     <span asp-validation-for="ParentCategoryId" class="text-danger small"></span> *@
+@*                     <div class="form-text text-warning small fw-bold mt-1"> *@
+@*                         <i class="bi bi-exclamation-triangle me-1"></i> Relocating this parent node will trigger a cascading background update to all subcategory paths! *@
+@*                     </div> *@
+@*                 </div> *@
+@* *@
+@*                 <div class="mb-4"> *@
+@*                     <label asp-for="Description" class="form-label fw-bold">Structural Internal Description</label> *@
+@*                     <textarea asp-for="Description" class="form-control" rows="3"></textarea> *@
+@*                     <span asp-validation-for="Description" class="text-danger small"></span> *@
+@*                 </div> *@
+@* *@
+@*                 <div class="d-flex justify-content-between align-items-center border-top pt-3"> *@
+@*                     <a asp-action="Index" class="btn btn-outline-secondary"> *@
+@*                         <i class="bi bi-x-circle me-1"></i> Discard Variations *@
+@*                     </a> *@
+@*                     <button type="submit" class="btn btn-warning px-4 text-dark"> *@
+@*                         <i class="bi bi-save me-1"></i> Propagate Modifications *@
+@*                     </button> *@
+@*                 </div> *@
+@*             </form> *@
+@*         </div> *@
 @*     </div> *@
 @* </div> *@
-@* *@
-@* <div> *@
-@*     <a asp-action="Index">Back to List</a> *@
-@* </div> *@
-@* *@
-
-
-@model e_store.Models.Category
-
-<div class="container mt-4" style="max-width: 650px;">
-    <div class="card shadow-sm border-warning">
-        <div class="card-header bg-warning text-dark py-3">
-            <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Modify Branch Parameters</h5>
-        </div>
-        <div class="card-body p-4">
-            <form asp-action="Edit" method="post">
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger small d-none"></div>
-                
-                <input type="hidden" asp-for="Id" />
-                <input type="hidden" asp-for="Slug" />
-
-                <div class="mb-3">
-                    <label asp-for="Name" class="form-label fw-bold">Category Display Title</label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger small"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="ParentCategoryId" class="form-label fw-bold">Relational Parent Shift Target</label>
-                    <select asp-for="ParentCategoryId" class="form-select" asp-items="ViewBag.ParentCategoryId">
-                        <option value="-1">-- None (Move to Top-Level Root Shelf) --</option>
-                    </select>
-                    <span asp-validation-for="ParentCategoryId" class="text-danger small"></span>
-                    <div class="form-text text-warning small fw-bold mt-1">
-                        <i class="bi bi-exclamation-triangle me-1"></i> Relocating this parent node will trigger a cascading background update to all subcategory paths!
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <label asp-for="Description" class="form-label fw-bold">Structural Internal Description</label>
-                    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
-                    <span asp-validation-for="Description" class="text-danger small"></span>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center border-top pt-3">
-                    <a asp-action="Index" class="btn btn-outline-secondary">
-                        <i class="bi bi-x-circle me-1"></i> Discard Variations
-                    </a>
-                    <button type="submit" class="btn btn-warning px-4 text-dark">
-                        <i class="bi bi-save me-1"></i> Propagate Modifications
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>

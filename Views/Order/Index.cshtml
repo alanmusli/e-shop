@@ -6,7 +6,7 @@
             <h2 class="fw-bold bistrejd-text-blue mb-1">Мои Нарачки</h2>
             <p class="text-muted small mb-0">Преглед на вашата историја на купувања и статус на активни нарачки.</p>
         </div>
-        <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+        <a asp-controller="Product" asp-action="Index" asp-route-slug="all" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
             <i class="bi bi-cart-plus me-1"></i> Ново Купување
         </a>
     </div>
@@ -44,11 +44,11 @@
                                     @order.OrderDate.ToString("dd.MM.yyyy HH:mm")
                                 </td>
                                 <td>
-                                    @if (order.OrderStatus == "Pending")
+                                    @if (order.OrderStatus == "new")
                                     {
                                         <span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i> Во обработка</span>
                                     }
-                                    else if (order.OrderStatus == "Shipped")
+                                    else if (order.OrderStatus == "delivered")
                                     {
                                         <span class="badge bg-info text-dark"><i class="bi bi-truck me-1"></i> Испорачана</span>
                                     }

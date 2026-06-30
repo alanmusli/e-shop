@@ -3,8 +3,10 @@ using System.Text.Unicode;
 using e_store.Data;
 using e_store.Models;
 using e_store.Services;
+using Hangfire;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Hangfire.InMemory;
 using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +36,15 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddHostedService<CartCleanUpService>();
+
+builder.Services.AddHangfire(config => config
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UseInMemoryStorage());
+
+builder.Services.AddHangfireServer();
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 var app = builder.Build();
 
@@ -66,8 +77,14 @@ app.UseRouting();
 
 app.UseSession();
 app.UseAuthorization();
+app.UseHangfireDashboard("/hangfire");
 
 app.MapStaticAssets();
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+).WithStaticAssets();
 
 app.MapControllerRoute(
         name: "default",

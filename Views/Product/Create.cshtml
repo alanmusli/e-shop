@@ -1,149 +1,75 @@
+@* *@
 @* @model e_store.Models.Product *@
 @* *@
-@* @{ *@
-@*     ViewData["Title"] = "Create"; *@
-@* } *@
+@* <div class="container mt-4" style="max-width: 850px;"> *@
+@*     <div class="card shadow-sm"> *@
+@*         <div class="card-header bg-primary text-white py-3"> *@
+@*             <h5 class="mb-0"><i class="bi bi-plus-square me-2"></i>Catalog Creation Entry</h5> *@
+@*         </div> *@
+@*         <div class="card-body p-4"> *@
+@*             <form asp-action="Create" enctype="multipart/form-data" method="post"> *@
+@*                 <div asp-validation-summary="ModelOnly" class="alert alert-danger small d-none"></div> *@
 @* *@
-@* <h1>Create</h1> *@
+@*                 <div class="mb-3"> *@
+@*                     <label asp-for="Name" class="form-label fw-bold">Product Title</label> *@
+@*                     <input asp-for="Name" class="form-control" placeholder="e.g., DeWalt 20V Max XR Brushless Drill" /> *@
+@*                     <span asp-validation-for="Name" class="text-danger small"></span> *@
+@*                 </div> *@
 @* *@
-@* <h4>Product</h4> *@
-@* <hr /> *@
-@* <div class="row"> *@
-@*     <div class="col-md-4"> *@
-@*         <form asp-action="Create"> *@
-@*             <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="Name" class="control-label"></label> *@
-@*                 <input asp-for="Name" class="form-control" /> *@
-@*                 <span asp-validation-for="Name" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="BrandId" class="control-label"></label> *@
-@*                 <select asp-for="BrandId" class ="form-control" asp-items="ViewBag.BrandId"></select> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="Description" class="control-label"></label> *@
-@*                 <input asp-for="Description" class="form-control" /> *@
-@*                 <span asp-validation-for="Description" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="Price" class="control-label"></label> *@
-@*                 <input asp-for="Price" class="form-control" /> *@
-@*                 <span asp-validation-for="Price" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="InventoryCount" class="control-label"></label> *@
-@*                 <input asp-for="InventoryCount" class="form-control" /> *@
-@*                 <span asp-validation-for="InventoryCount" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="ImageUrl" class="control-label"></label> *@
-@*                 <input asp-for="ImageUrl" class="form-control" /> *@
-@*                 <span asp-validation-for="ImageUrl" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="CreatedDate" class="control-label"></label> *@
-@*                 <input asp-for="CreatedDate" class="form-control" type="hidden" value="@DateTime.Now" /> *@
-@*                 <span asp-validation-for="CreatedDate" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group form-check"> *@
-@*                 <label class="form-check-label"> *@
-@*                     <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive) *@
-@*                 </label> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="SKU" class="control-label"></label> *@
-@*                 <input asp-for="SKU" class="form-control" type="hidden" value="/"/> *@
-@*                 <span asp-validation-for="SKU" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="CategoryId" class="control-label"></label> *@
-@*                 <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <input type="submit" value="Create" class="btn btn-primary" /> *@
-@*             </div> *@
-@*         </form> *@
+@*                 <div class="row g-3 mb-3"> *@
+@*                     <div class="col-md-6"> *@
+@*                         <label asp-for="BrandId" class="form-label fw-bold">Manufacturing Brand</label> *@
+@*                         <select asp-for="BrandId" class="form-select" asp-items="ViewBag.BrandId"> *@
+@*                             <option value="">-- Choose Brand Asset --</option> *@
+@*                         </select> *@
+@*                         <span asp-validation-for="BrandId" class="text-danger small"></span> *@
+@*                     </div> *@
+@*                     <div class="col-md-6"> *@
+@*                         <label asp-for="CategoryId" class="form-label fw-bold">Category Assignment Node</label> *@
+@*                         <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.CategoryId"> *@
+@*                             <option value="">-- Choose Tree Node Target --</option> *@
+@*                         </select> *@
+@*                         <span asp-validation-for="CategoryId" class="text-danger small"></span> *@
+@*                     </div> *@
+@*                 </div> *@
+@* *@
+@*                 <div class="row g-3 mb-3"> *@
+@*                     <div class="col-md-6"> *@
+@*                         <label asp-for="Price" class="form-label fw-bold">Unit Retail Price ($)</label> *@
+@*                         <div class="input-group"> *@
+@*                             <span class="input-group-text">$</span> *@
+@*                             <input asp-for="Price" class="form-control" type="number" step="0.01" min="0.01" placeholder="0.00" /> *@
+@*                         </div> *@
+@*                         <span asp-validation-for="Price" class="text-danger small"></span> *@
+@*                     </div> *@
+@*                     <div class="col-md-6"> *@
+@*                         <label asp-for="InventoryCount" class="form-label fw-bold">Initial Inventory Count</label> *@
+@*                         <input asp-for="InventoryCount" class="form-control" type="number" step="1" min="0" placeholder="0" /> *@
+@*                         <span asp-validation-for="InventoryCount" class="text-danger small"></span> *@
+@*                     </div> *@
+@*                 </div> *@
+@* *@
+@*                 <div class="mb-3"> *@
+@*                     <label class="form-label fw-bold">Product Media File (Step 3.3 Target)</label> *@
+@*                     <input type="file" name="imageFile" class="form-control" disabled placeholder="Pipeline unconfigured until Step 3.3" /> *@
+@*                     <div class="form-text text-muted small">File upload handling will be linked during Phase 3.3 stream binding configuration.</div> *@
+@*                 </div> *@
+@* *@
+@*                 <div class="mb-4"> *@
+@*                     <label asp-for="Description" class="form-label fw-bold">Technical Specifications & Public Description</label> *@
+@*                     <textarea asp-for="Description" class="form-control" rows="4" placeholder="Detail hardware metrics, components, and user application notes..."></textarea> *@
+@*                     <span asp-validation-for="Description" class="text-danger small"></span> *@
+@*                 </div> *@
+@* *@
+@*                 <div class="d-flex justify-content-between align-items-center border-top pt-3"> *@
+@*                     <a asp-action="Index" class="btn btn-outline-secondary"> *@
+@*                         <i class="bi bi-arrow-left me-1"></i> Cancel & Return *@
+@*                     </a> *@
+@*                     <button type="submit" class="btn btn-primary px-4"> *@
+@*                         <i class="bi bi-check-circle me-1"></i> Commit Product Entry *@
+@*                     </button> *@
+@*                 </div> *@
+@*             </form> *@
+@*         </div> *@
 @*     </div> *@
 @* </div> *@
-@* *@
-@* <div> *@
-@*     <a asp-action="Index">Back to List</a> *@
-@* </div> *@
-@* *@
-
-
-@model e_store.Models.Product
-
-<div class="container mt-4" style="max-width: 850px;">
-    <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white py-3">
-            <h5 class="mb-0"><i class="bi bi-plus-square me-2"></i>Catalog Creation Entry</h5>
-        </div>
-        <div class="card-body p-4">
-            <form asp-action="Create" enctype="multipart/form-data" method="post">
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger small d-none"></div>
-
-                <div class="mb-3">
-                    <label asp-for="Name" class="form-label fw-bold">Product Title</label>
-                    <input asp-for="Name" class="form-control" placeholder="e.g., DeWalt 20V Max XR Brushless Drill" />
-                    <span asp-validation-for="Name" class="text-danger small"></span>
-                </div>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label asp-for="BrandId" class="form-label fw-bold">Manufacturing Brand</label>
-                        <select asp-for="BrandId" class="form-select" asp-items="ViewBag.BrandId">
-                            <option value="">-- Choose Brand Asset --</option>
-                        </select>
-                        <span asp-validation-for="BrandId" class="text-danger small"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <label asp-for="CategoryId" class="form-label fw-bold">Category Assignment Node</label>
-                        <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.CategoryId">
-                            <option value="">-- Choose Tree Node Target --</option>
-                        </select>
-                        <span asp-validation-for="CategoryId" class="text-danger small"></span>
-                    </div>
-                </div>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label asp-for="Price" class="form-label fw-bold">Unit Retail Price ($)</label>
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input asp-for="Price" class="form-control" type="number" step="0.01" min="0.01" placeholder="0.00" />
-                        </div>
-                        <span asp-validation-for="Price" class="text-danger small"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <label asp-for="InventoryCount" class="form-label fw-bold">Initial Inventory Count</label>
-                        <input asp-for="InventoryCount" class="form-control" type="number" step="1" min="0" placeholder="0" />
-                        <span asp-validation-for="InventoryCount" class="text-danger small"></span>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Product Media File (Step 3.3 Target)</label>
-                    <input type="file" name="imageFile" class="form-control" disabled placeholder="Pipeline unconfigured until Step 3.3" />
-                    <div class="form-text text-muted small">File upload handling will be linked during Phase 3.3 stream binding configuration.</div>
-                </div>
-
-                <div class="mb-4">
-                    <label asp-for="Description" class="form-label fw-bold">Technical Specifications & Public Description</label>
-                    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Detail hardware metrics, components, and user application notes..."></textarea>
-                    <span asp-validation-for="Description" class="text-danger small"></span>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center border-top pt-3">
-                    <a asp-action="Index" class="btn btn-outline-secondary">
-                        <i class="bi bi-arrow-left me-1"></i> Cancel & Return
-                    </a>
-                    <button type="submit" class="btn btn-primary px-4">
-                        <i class="bi bi-check-circle me-1"></i> Commit Product Entry
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>

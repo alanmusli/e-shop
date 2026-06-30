@@ -1,32 +1,11 @@
-﻿@* @{ *@
-@*     ViewData["Title"] = "Home Page"; *@
-@* } *@
-@* *@
-@* <div class="p-5 mb-4 bg-light rounded-3 shadow-sm text-center"> *@
-@*     <div class="container-fluid py-5"> *@
-@*         <h1 class="display-5 fw-bold">Welcome to Our E-Shop</h1> *@
-@*         <p class="col-md-8 mx-auto fs-4 text-muted">Premium quality products delivered to your door.</p> *@
-@*         <a class="btn btn-primary btn-lg mt-3" asp-controller="Product" asp-action="Index">Browse Products</a> *@
-@*     </div> *@
-@* </div> *@
-@* *@
-@* <div class="container my-5"> *@
-@*     <h2 class="text-center mb-4">Our Trusted Brands</h2> *@
-@*     <div class="row row-cols-2 row-cols-md-4 g-4 text-center"> *@
-@*         <div class="col"><div class="card p-3 border-0 shadow-sm">Brand A</div></div> *@
-@*         <div class="col"><div class="card p-3 border-0 shadow-sm">Brand B</div></div> *@
-@*         <div class="col"><div class="card p-3 border-0 shadow-sm">Brand C</div></div> *@
-@*         <div class="col"><div class="card p-3 border-0 shadow-sm">Brand D</div></div> *@
-@*     </div> *@
-@* </div> *@
-
-
-@{
+﻿@{
     ViewData["Title"] = "Почетна";
 }
 
+
 <div class="position-relative overflow-hidden text-center shadow-lg mb-5" style="background: linear-gradient(135deg, var(--brand-blue) 0%, #0a0a32 100%); border-radius: 0 0 40px 40px;">
-    <div class="col-md-8 p-lg-5 mx-auto my-5 py-5">
+    <div class="col-md-10 col-lg-8 p-lg-5 mx-auto my-5 py-5 position-relative" style="z-index: 1;">
+        
         <p class="font-monospace fw-bold mb-3 tracking-wider text-uppercase" style="color: var(--brand-red); letter-spacing: 2px;">
             <i class="bi bi-star-fill me-2"></i>Премиум квалитет
         </p>
@@ -39,9 +18,25 @@
             Откријте го нашиот премиум каталог на алати и опрема. Врвен квалитет, докажани брендови и сигурна достава директно до вашата врата.
         </p>
         
-        <div class="d-flex justify-content-center gap-3">
-            <a asp-controller="Product" asp-action="Index" class="btn bistrejd-btn-red btn-lg px-5 py-3 fw-bold text-uppercase d-flex align-items-center shadow">
-                <i class="bi bi-cart-fill me-2"></i> Разгледај Каталог
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-10 col-lg-9">
+                <form asp-controller="Product" asp-action="Index" method="get">
+                    <div class="input-group input-group-lg shadow-lg" style="border-radius: 16px; overflow: hidden; border: 3px solid rgba(255,255,255,0.1);">
+                        <span class="input-group-text bg-white border-0 text-muted ps-4">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" name="searchQuery" class="form-control border-0 px-3 shadow-none" placeholder="Пребарајте " required style="font-size: 16px;">
+                        <button class="btn bistrejd-btn-red fw-bold px-4 px-md-5 text-uppercase" type="submit" style="font-size: 15px; letter-spacing: 1px;">
+                            Барај
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a asp-controller="Product" asp-action="Index" class="btn btn-light btn-lg px-5 py-3 fw-bold text-uppercase d-flex align-items-center shadow-sm" style="color: var(--brand-blue);">
+                <i class="bi bi-grid-fill me-2"></i> Цел Каталог
             </a>
             <a asp-controller="Contact" asp-action="Index" class="btn btn-outline-light btn-lg px-5 py-3 fw-bold text-uppercase d-flex align-items-center">
                 Контакт
@@ -49,8 +44,35 @@
         </div>
     </div>
     
-    <i class="bi bi-tools position-absolute" style="font-size: 25rem; color: rgba(255,255,255,0.02); bottom: -50px; right: -50px; transform: rotate(-15deg);"></i>
+    <i class="bi bi-tools position-absolute" style="font-size: 25rem; color: rgba(255,255,255,0.02); bottom: -50px; right: -50px; transform: rotate(-15deg); z-index: 0;"></i>
 </div>
+@* <div class="position-relative overflow-hidden text-center shadow-lg mb-5" style="background: linear-gradient(135deg, var(--brand-blue) 0%, #0a0a32 100%); border-radius: 0 0 40px 40px;"> *@
+@*     <div class="col-md-8 p-lg-5 mx-auto my-5 py-5"> *@
+@*         <p class="font-monospace fw-bold mb-3 tracking-wider text-uppercase" style="color: var(--brand-red); letter-spacing: 2px;"> *@
+@*             <i class="bi bi-star-fill me-2"></i>Премиум квалитет *@
+@*         </p> *@
+@*          *@
+@*         <h1 class="display-3 fw-bold mb-4 text-white" style="letter-spacing: -1px;"> *@
+@*             Професионални алати за секој мајстор *@
+@*         </h1> *@
+@*          *@
+@*         <p class="lead fw-normal text-white-50 mb-5 mx-auto" style="max-width: 600px;"> *@
+@*             Откријте го нашиот премиум каталог на алати и опрема. Врвен квалитет, докажани брендови и сигурна достава директно до вашата врата. *@
+@*         </p> *@
+@*          *@
+@*         <div class="d-flex justify-content-center gap-3"> *@
+@*             <a asp-controller="Product" asp-action="Index" class="btn bistrejd-btn-red btn-lg px-5 py-3 fw-bold text-uppercase d-flex align-items-center shadow"> *@
+@*                 <i class="bi bi-cart-fill me-2"></i> Разгледај Каталог *@
+@*             </a> *@
+@*             <a asp-controller="Contact" asp-action="Index" class="btn btn-outline-light btn-lg px-5 py-3 fw-bold text-uppercase d-flex align-items-center"> *@
+@*                 Контакт *@
+@*             </a> *@
+@*         </div> *@
+@*     </div> *@
+@*      *@
+@*     <i class="bi bi-tools position-absolute" style="font-size: 25rem; color: rgba(255,255,255,0.02); bottom: -50px; right: -50px; transform: rotate(-15deg);"></i> *@
+@* </div> *@
+
 
 <div class="container mb-5">
     <div class="row g-4 mb-5 pb-5 border-bottom" style="border-color: rgba(28, 28, 132, 0.1) !important;">
