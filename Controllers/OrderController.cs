@@ -106,7 +106,7 @@ namespace e_store.Controllers
                 order.OrderStatus = "new";
                 
                 _context.Orders.Add(order);
-                _context.CartItems.RemoveRange(cart.CartItems);
+                _context.CartItems.RemoveRange(cart.CartItems); 
                 await _context.SaveChangesAsync();
                 
                 string emailBody = $"<h3>Успешна нарачка #{order.Id}!</h3><p>Вкупно: {order.TotalAmount} ден.</p>";

@@ -69,11 +69,22 @@ public class BrandController : Controller
     [HttpPost]
     public IActionResult Remove(int id)
     {
+        
+        bool hasProducts = _context.Products.Any(p => p.BrandId == id);
+    
+        if (hasProducts)
+        {
+            TempData["ErrorMessage"] = "Не можете да го избришете овој бренд бидејќи има продукти поврзани со него. Прво избришете ги продуктите.";
+            return RedirectToAction("Index", "Brand");
+        }
+        
         var brand = _context.Brands.FirstOrDefault(x => x.Id == id);
+
         if (brand != null)
         {
             _context.Brands.Remove(brand);
             _context.SaveChanges();
+            TempData["SuccessMessage"] = "Брендот е успешно избришан.";
         }
 
         return RedirectToAction("Index", "Brand");

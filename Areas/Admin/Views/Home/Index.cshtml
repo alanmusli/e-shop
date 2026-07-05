@@ -104,7 +104,7 @@
                         
                         @foreach (var item in Model.notProccessed)
                         {
-                            <tr>
+                            <tr class="clickable-row" onclick="window.location.href='@Url.Action("Details", "Order", new { id = item.Id })';">
                                 <td class="px-3 font-monospace fw-bold"># @item.Id</td>
                                 <td>@item.ShippingFirstName @item.ShippingLastName</td>
                                 <td>@item.OrderDate</td>
@@ -163,6 +163,14 @@
 <style>
     .fade-in {
         animation: fadeIn 0.5s ease-in;
+    }
+
+    .clickable-row {
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+    .clickable-row:hover {
+        background-color: #f8fafc; /* Блага сива боја при ховер */
     }
 
     @@keyframes fadeIn {

@@ -1,18 +1,64 @@
-@model Brand
+@model e_store.Models.Brand
+
 @{
-    ViewBag.Title = "title";
+    ViewData["Title"] = "Add New Brand";
     Layout = "_Layout";
 }
 
-<h2>Add Brand</h2>
-
-
-
-<form asp-action="Add" asp-controller="Brand" asp-area="Admin" method="post">
-    <input type="hidden" asp-for="@Model.Id" value="0"/>
+<div class="container mt-5">
     
-    <label>Name:</label>
-    <input type="text" asp-for="@Model.Name"/>
-    
-    <button type="submit">Add Brand</button>
-</form>
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 style="font-family: 'Courier New', Courier, monospace; border-bottom: 2px solid #333; padding-bottom: 8px; color: #333;">
+                <i class="bi bi-terminal-fill me-2"></i>[ Admin: Add Brand ]
+            </h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-lg-5">
+            
+            <form asp-action="Add" asp-controller="Brand" asp-area="Admin" method="post" 
+                  style="background-color: #f8f9fa; border: 1px solid #a0a0a0; padding: 25px; box-shadow: 3px 3px 0px rgba(0,0,0,0.1);">
+                
+                <input type="hidden" asp-for="Id" value="0"/>
+
+                <fieldset>
+                    <legend style="font-weight: bold; font-size: 1.1rem; color: #004085; padding: 0 5px; width: auto; float: none;">
+                        Brand Details
+                    </legend>
+                    <hr style="margin-top: 0; border-top: 1px dashed #a0a0a0; margin-bottom: 20px;" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger fw-bold small mb-3"></div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="Name" style="font-weight: 600; color: #333; display: block; margin-bottom: 5px;">
+                            Brand Name: <span class="text-danger">*</span>
+                        </label>
+
+                        <input type="text" asp-for="Name" class="form-control form-control-lg" 
+                               style="border: 1px solid #888; border-radius: 0; background-color: #fff;" 
+                               placeholder="Enter manufacturer name..." autocomplete="off" />
+                        
+                        <span asp-validation-for="Name" class="text-danger small" style="font-weight: bold;"></span>
+                    </div>
+
+                    <div class="form-actions mt-4 d-flex justify-content-end align-items-center" 
+                         style="background-color: #e9ecef; padding: 12px; border: 1px solid #ced4da;">
+                        
+                        <a asp-action="Index" class="btn btn-sm me-3" 
+                           style="border-radius: 0; border: 1px solid #6c757d; background-color: #f8f9fa; color: #333; font-weight: 600;">
+                            <i class="bi bi-arrow-left"></i> Cancel
+                        </a>
+                        
+                        <button type="submit" class="btn btn-sm" 
+                                style="border-radius: 0; border: 1px solid #002752; background-color: #004085; color: white; font-weight: bold; letter-spacing: 0.5px;">
+                            <i class="bi bi-hdd-fill me-1"></i> Save Record
+                        </button>
+                    </div>
+                </fieldset>
+            </form>
+            
+        </div>
+    </div>
+</div>
