@@ -71,8 +71,8 @@ namespace e_store.Controllers
             var cart = await _context.Carts
                 .Include(c => c.CartItems)
                 .ThenInclude(x => x.Product)
-                .Where(c => c.CartItems.Any()) // Игнорирај ги празните кошнички (како ID 21)
-                .OrderByDescending(c => c.Id)  // Земи ја последната креирана (твојата моментална)
+                .Where(c => c.CartItems.Any())
+                .OrderByDescending(c => c.Id) 
                 .FirstOrDefaultAsync();
             
             
@@ -100,9 +100,9 @@ namespace e_store.Controllers
                         Quantity = item.Quantity,
                         Price = item.Product.Price
                     });
+                    
                 }
-
-
+                
                 order.OrderStatus = "new";
                 
                 _context.Orders.Add(order);

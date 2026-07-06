@@ -2,79 +2,110 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Најава";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
-                <hr />
-                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                    <label asp-for="Input.Email" class="form-label">Email</label>
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label asp-for="Input.Password" class="form-label">Password</label>
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="checkbox mb-3">
-                    <label asp-for="Input.RememberMe" class="form-label">
-                        <input class="form-check-input" asp-for="Input.RememberMe" />
-                        @Html.DisplayNameFor(m => m.Input.RememberMe)
-                    </label>
-                </div>
-                <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-                </div>
-                <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
-                </div>
-            </form>
-        </section>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to log in.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
+<div class="container py-5 fade-in">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-5">
+            
+            <!-- Картичка за најава -->
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                
+                <!-- Хедер на картичката -->
+                <div class="card-header bg-white border-0 text-center pt-5 pb-3">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-light rounded-circle mb-3 shadow-sm" style="width: 70px; height: 70px;">
+                        <i class="bi bi-person-circle fs-1 text-primary"></i>
                     </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                    <h3 class="fw-bold text-dark mb-1">Добредојдовте назад</h3>
+                    <p class="text-muted small">Најавете се за да продолжите кон вашиот профил.</p>
+                </div>
+
+                <div class="card-body px-4 px-md-5 pb-5 pt-2">
+                    
+                    <form id="account" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 small fw-bold" role="alert"></div>
+
+                        <!-- Е-маил -->
+                        <div class="form-floating mb-4">
+                            <input asp-for="Input.Email" class="form-control bg-light border-0 shadow-none" 
+                                   style="border-radius: 10px;" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                            <label asp-for="Input.Email" class="text-muted"><i class="bi bi-envelope me-2"></i>Е-маил адреса</label>
+                            <span asp-validation-for="Input.Email" class="text-danger small fw-bold mt-1 d-block"></span>
+                        </div>
+
+                        <!-- Лозинка -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Password" class="form-control bg-light border-0 shadow-none" 
+                                   style="border-radius: 10px;" autocomplete="current-password" aria-required="true" placeholder="password" />
+                            <label asp-for="Input.Password" class="text-muted"><i class="bi bi-lock me-2"></i>Лозинка</label>
+                            <span asp-validation-for="Input.Password" class="text-danger small fw-bold mt-1 d-block"></span>
+                        </div>
+
+                        <!-- Запамети ме & Заборавена лозинка -->
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input shadow-sm" asp-for="Input.RememberMe" id="rememberMeCheck" />
+                                <label class="form-check-label small text-secondary fw-semibold" for="rememberMeCheck">
+                                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                </label>
+                            </div>
+                            <a id="forgot-password" asp-page="./ForgotPassword" class="small fw-bold text-decoration-none text-primary">
+                                Заборавена лозинка?
+                            </a>
+                        </div>
+
+                        <!-- Копче за најава -->
                         <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
+                            <button id="login-submit" type="submit" class="btn btn-primary btn-lg w-100 fw-bold shadow-sm" style="border-radius: 10px; letter-spacing: 0.5px;">
+                                Најави се <i class="bi bi-box-arrow-in-right ms-2"></i>
+                            </button>
                         </div>
                     </form>
-                }
-            }
-        </section>
+
+                    <!-- Надворешни логирања (Ако некогаш додадеш Google/Facebook) -->
+                    @{
+                        if ((Model.ExternalLogins?.Count ?? 0) > 0)
+                        {
+                            <div class="d-flex align-items-center my-4">
+                                <hr class="flex-grow-1 text-muted">
+                                <span class="mx-3 text-muted small fw-bold text-uppercase">Или најавете се со</span>
+                                <hr class="flex-grow-1 text-muted">
+                            </div>
+
+                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                <div class="d-grid gap-2">
+                                    @foreach (var provider in Model.ExternalLogins!)
+                                    {
+                                        <button type="submit" class="btn btn-outline-secondary fw-bold rounded-pill" name="provider" value="@provider.Name">
+                                            @provider.DisplayName
+                                        </button>
+                                    }
+                                </div>
+                            </form>
+                        }
+                    }
+
+                </div>
+                
+                <!-- Футер на картичката (Линкови за регистрација) -->
+                <div class="card-footer bg-light border-0 text-center py-4">
+                    <p class="mb-2 text-secondary small fw-semibold">
+                        Немате профил? 
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-primary fw-bold text-decoration-none">
+                            Регистрирајте се тука
+                        </a>
+                    </p>
+                    <p class="mb-0">
+                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation" class="text-muted small text-decoration-none" style="font-size: 0.8rem;">
+                            <i class="bi bi-envelope-exclamation me-1"></i> Препрати е-маил за потврда
+                        </a>
+                    </p>
+                </div>
+                
+            </div>
+            
+        </div>
     </div>
 </div>
 

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using e_store.Data;
 using Microsoft.AspNetCore.Mvc;
 using e_store.Models;
 
@@ -6,9 +7,16 @@ namespace e_store.Controllers;
 
 public class HomeController : Controller
 {
+    private readonly ApplicationDbContext _context;
+
+    public HomeController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
     public IActionResult Index()
     {
-        return View();
+        var brands = _context.Brands.ToList();
+        return View(brands);
     }
 
     public IActionResult Privacy()

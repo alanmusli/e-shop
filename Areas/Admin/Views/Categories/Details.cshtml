@@ -1,93 +1,70 @@
-@* @model e_store.Models.Category *@
-@* *@
-@* @{ *@
-@*     ViewData["Title"] = "Details"; *@
-@* } *@
-@* *@
-@* <h1>Details</h1> *@
-@* *@
-@* <div> *@
-@*     <h4>Category</h4> *@
-@*     <hr /> *@
-@*     <dl class="row"> *@
-@*         <dt class = "col-sm-2"> *@
-@*             @Html.DisplayNameFor(model => model.Name) *@
-@*         </dt> *@
-@*         <dd class = "col-sm-10"> *@
-@*             @Html.DisplayFor(model => model.Name) *@
-@*         </dd> *@
-@*         <dt class = "col-sm-2"> *@
-@*             @Html.DisplayNameFor(model => model.Description) *@
-@*         </dt> *@
-@*         <dd class = "col-sm-10"> *@
-@*             @Html.DisplayFor(model => model.Description) *@
-@*         </dd> *@
-@*         <dt class = "col-sm-2"> *@
-@*             @Html.DisplayNameFor(model => model.Slug) *@
-@*         </dt> *@
-@*         <dd class = "col-sm-10"> *@
-@*             @Html.DisplayFor(model => model.Slug) *@
-@*         </dd> *@
-@*         <dt class = "col-sm-2"> *@
-@*             @Html.DisplayNameFor(model => model.ParentCategory) *@
-@*         </dt> *@
-@*         <dd class = "col-sm-10"> *@
-@*             @Html.DisplayFor(model => model.ParentCategory.Name) *@
-@*         </dd> *@
-@*     </dl> *@
-@* </div> *@
-@* <div> *@
-@*     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> | *@
-@*     <a asp-action="Index">Back to List</a> *@
-@* </div> *@
-
-
-
 @model e_store.Models.Category
 
-<div class="container mt-4" style="max-width: 750px;">
-    <div class="card shadow-sm">
-        <div class="card-header bg-light d-flex justify-content-between align-items-center py-3">
-            <h5 class="mb-0 text-muted"><i class="bi bi-info-circle me-2"></i>Structural Branch Diagnostics</h5>
-            <span class="badge bg-secondary">System Entity Hash: #@Model.Id</span>
+@{
+    ViewData["Title"] = "Преглед на Категорија";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid py-4" style="max-width: 850px;">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+        <div>
+            <a asp-action="Index" class="btn btn-sm btn-light font-monospace text-uppercase fw-bold text-muted small px-3">
+                <i class="bi bi-arrow-left me-2"></i>Назад кон леџерот
+            </a>
         </div>
-        <div class="card-body p-4">
-            <h2 class="mb-1 text-primary"><i class="bi bi-folder-symlink me-2"></i>@Model.Name</h2>
-            <p class="text-muted mb-4">
-                Absolute Route Slug Compilation: <code class="bg-dark text-light p-1 px-2 rounded fs-6">@Model.Slug</code>
+        <div>
+            <span class="badge bg-secondary font-monospace px-3 py-2">
+                СИСТЕМСКИ ИД: #@Model.Id
+            </span>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm" style="border-radius: 12px;">
+        <div class="card-header bg-light border-0 py-3">
+            <h5 class="mb-0 fw-bold bistrejd-text-blue">
+                <i class="bi bi-diagram-3 me-2"></i>Дијагностика на категорија
+            </h5>
+        </div>
+        
+        <div class="card-body p-4 p-md-5">
+            <h2 class="mb-1 fw-bold text-dark">@Model.Name</h2>
+            <p class="text-muted mb-4 font-monospace small">
+                Апсолутна патека: <code class="text-primary bg-primary bg-opacity-10 px-2 py-1 rounded">/@Model.Slug</code>
             </p>
 
-            <div class="row bg-light rounded p-3 m-0 mb-4 border">
-                <div class="col-sm-4 text-muted fw-bold">Relational Placement Status</div>
-                <div class="col-sm-8">
-                    @if (Model.ParentCategoryId == null)
-                    {
-                        <span class="badge bg-primary fs-6">Independent Master Node (Root)</span>
-                    }
-                    else
-                    {
-                        <span class="text-dark">
-                            Dependent Branch Node of Parent ID: <strong>#@Model.ParentCategoryId</strong>
-                        </span>
-                    }
+            <div class="bg-light rounded-3 p-4 mb-4 border">
+                <div class="row align-items-center">
+                    <div class="col-sm-4 text-muted font-monospace small text-uppercase fw-bold">Локација во стеблото</div>
+                    <div class="col-sm-8">
+                        @if (Model.ParentCategoryId == null)
+                        {
+                            <span class="badge bg-primary rounded-pill px-3 py-2">Главен јазол (Root)</span>
+                        }
+                        else
+                        {
+                            <span class="text-dark fw-medium">
+                                Под-категорија на: <strong class="bistrejd-text-blue">#@Model.ParentCategoryId</strong>
+                            </span>
+                        }
+                    </div>
                 </div>
             </div>
 
             <div class="mb-3">
-                <h6 class="fw-bold text-muted text-uppercase small tracking-wide">Category Ledger Description</h6>
-                <p class="lh-base bg-white p-3 border rounded text-secondary" style="white-space: pre-line;">
-                    @(string.IsNullOrWhiteSpace(Model.Description) ? "No structural notes logged for this category ledger line item entry." : Model.Description)
-                </p>
+                <h6 class="fw-bold text-muted text-uppercase font-monospace small mb-3">Опис и белешки</h6>
+                <div class="p-4 bg-white border rounded-3 text-secondary" style="line-height: 1.8; min-height: 100px;">
+                    @(string.IsNullOrWhiteSpace(Model.Description) ? "Нема внесено дополнителни белешки за оваа категорија." : Model.Description)
+                </div>
             </div>
         </div>
-        <div class="card-footer bg-light d-flex justify-content-between py-3">
-            <a asp-area="Admin"asp-action="Index" class="btn btn-outline-secondary">
-                <i class="bi bi-arrow-left me-1"></i> Back to Tree Grid
+
+        <div class="card-footer bg-light border-0 d-flex justify-content-between py-3 px-4">
+            <a asp-action="Index" class="btn btn-outline-secondary px-4 fw-medium" style="border-radius: 8px;">
+                <i class="bi bi-arrow-left me-2"></i>Назад
             </a>
-   
-                <a asp-area="Admin" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning text-dark px-4">
-                    <i class="bi bi-pencil me-1"></i> Re-align Hierarchy
-                </a>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning px-4 fw-bold text-uppercase shadow-sm" style="border-radius: 8px; color: #212529;">
+                <i class="bi bi-pencil-square me-2"></i>Измени категорија
+            </a>
         </div>
     </div>
 </div>

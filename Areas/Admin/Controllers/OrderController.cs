@@ -51,11 +51,38 @@ namespace e_store.Areas.Admin.Controllers
             return RedirectToAction("Index", "Order");
             
         }
+        [HttpGet]
+        public async Task<IActionResult> ExportOrdersCsv()
+        {
+            var orders = await _context.Orders
+                .Include(o => o.OrderDetails)
+                .ThenInclude(od => od.Product)
+                .OrderByDescending(o => o.OrderDate)
+                .ToListAsync();
+
+            var builder = new System.Text.StringBuilder();
+            
+            builder.AppendLine("ID,Kupuvac,Datum,Iznos,Status,Produkti_i_Kolicini");
+
+            foreach (var order in orders)
+            {
+                var buyer = $"{order.ShippingFirstName} {order.ShippingLastName}";
+                var date = order.OrderDate.ToString("dd.MM.yyyy");
+                
+                var productsList = order.OrderDetails.Select(od => $"{od.Product?.Name} (x{od.Quantity})");
+                var productsString = string.Join(" | ", productsList);
+                
+                // builder.AppendLine($"{order.Id},{buyer},{date},{order.TotalAmount},{order.OrderStatus},{productsString}");
+                builder.AppendLine($"{order.Id},\"{buyer}\",{date},\"{order.TotalAmount}\",\"{order.OrderStatus}\",\"{productsString}\"");
+            }
+            
+            return File(System.Text.Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", "izveshtaj_naracki.csv");
+        }
 
         [HttpPost]
         public async Task<IActionResult> ChangeStatus(int id, string? status)
         {
-            var order = _context.Orders.Include(x=>x.OrderDetails).FirstOrDefaultAsync(x => x.Id == id);
+            var order = await _context.Orders.Include(x=>x.OrderDetails).FirstOrDefaultAsync(x => x.Id == id);
             
             if (order == null)
             {
@@ -68,16 +95,36 @@ namespace e_store.Areas.Admin.Controllers
             }
             else if (statuses.Contains(status))
             {
+                if (order.OrderStatus == "new" && status != "cancel")
+                {
+                    var products = order.OrderDetails;
+                    foreach (var item in products)
+                    {
+                        var prod = await _context.Products.FirstOrDefaultAsync(x => x.Id == item.ProductId);
+                        if (prod != null)
+                        {
+                            if (prod.InventoryCount - item.Quantity > 0)
+                            {
+                                prod.InventoryCount -= item.Quantity;
+                            }
+                            else
+                            {
+                                prod.InventoryCount = 0;
+                            }
+                            
+                        }
+                    }
+                }
                 if (status == "cancel")
                 {
-                    _context.OrderDetails.RemoveRange(order.Result.OrderDetails);
+                    _context.OrderDetails.RemoveRange(order.OrderDetails);
                 }
                 
-                order.Result.OrderStatus = status;
+                order.OrderStatus = status;
             }
 
-
-            _context.SaveChangesAsync();
+            
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("Index", "Order");
         }
@@ -89,7 +136,9 @@ namespace e_store.Areas.Admin.Controllers
             var order = await _context.Orders
                 .Include(o => o.OrderDetails)       
                 .ThenInclude(od => od.Product)  
-                .FirstOrDefaultAsync(o => o.Id == id);            if (order == null)
+                .FirstOrDefaultAsync(o => o.Id == id);            
+            
+            if (order == null)
             {
                 return NotFound();
             }
@@ -97,8 +146,7 @@ namespace e_store.Areas.Admin.Controllers
             return View(order);
 
         }
-
-
+        
         
     }
 }

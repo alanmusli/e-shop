@@ -174,7 +174,8 @@ namespace e_store.Areas.Admin.Controllers
                 var parentNode = _context.Categories.FirstOrDefault(x => x.Id == currentParentId);
                 if (parentNode != null)
                 {
-                    slugParts.Add(parentNode.Slug.TrimStart('/'));
+                    var parentSlugPart = parentNode.Name.ToLower().Trim().Replace(" ", "-");
+                    slugParts.Add(parentSlugPart);
                     currentParentId = parentNode.ParentCategoryId;
                 }
                 else

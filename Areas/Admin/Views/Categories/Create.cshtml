@@ -1,90 +1,70 @@
-@* @model e_store.Models.Category *@
-@* *@
-@* @{ *@
-@*     ViewData["Title"] = "Create"; *@
-@* } *@
-@* *@
-@* <h1>Create</h1> *@
-@* *@
-@* <h4>Category</h4> *@
-@* <hr /> *@
-@* <div class="row"> *@
-@*     <div class="col-md-4"> *@
-@*         <form asp-action="Create"> *@
-@*             <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="Name" class="control-label"></label> *@
-@*                 <input asp-for="Name" class="form-control" /> *@
-@*                 <span asp-validation-for="Name" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="Description" class="control-label"></label> *@
-@*                 <input asp-for="Description" class="form-control" /> *@
-@*                 <span asp-validation-for="Description" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <input asp-for="Slug" class="form-control" type="hidden" value=""/> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="ParentCategoryId" class="control-label"></label> *@
-@*                 <select asp-for="ParentCategoryId" class="form-control" asp-items="ViewBag.ParentCategoryId"> *@
-@*                     <option value="-1">None (root)</option> *@
-@*                 </select> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <input type="submit" value="Create" class="btn btn-primary" /> *@
-@*             </div> *@
-@*         </form> *@
-@*     </div> *@
-@* </div> *@
-@* *@
-@* <div> *@
-@*     <a asp-action="Index">Back to List</a> *@
-@* </div> *@
-@* *@
-
 
 @model e_store.Models.Category
 
-<div class="container mt-4" style="max-width: 650px;">
-    <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white py-3">
-            <h5 class="mb-0"><i class="bi bi-folder-plus me-2"></i>Create Structural Category Node</h5>
+@{
+    ViewData["Title"] = "Нова Категорија";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid py-4" style="max-width: 800px;">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+        <div>
+            <a asp-action="Index" class="btn btn-sm btn-light font-monospace text-uppercase fw-bold text-muted small px-3">
+                <i class="bi bi-arrow-left me-2"></i>Откажи
+            </a>
         </div>
-        <div class="card-body p-4">
-            <form asp-action="Create" method="post" asp-area="Admin">
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger small d-none"></div>
+        <div>
+            <span class="badge bg-primary font-monospace px-3 py-2">КРЕИРАЊЕ НА НОВ ЈАЗОЛ</span>
+        </div>
+    </div>
 
-                <div class="mb-3">
-                    <label asp-for="Name" class="form-label fw-bold">Category Display Title</label>
-                    <input asp-for="Name" class="form-control" placeholder="e.g., Cordless Drills" />
-                    <span asp-validation-for="Name" class="text-danger small"></span>
-                </div>
+    <div class="card border-0 shadow-sm" style="border-radius: 12px;">
+        <div class="card-header bg-light border-0 py-3">
+            <h5 class="mb-0 fw-bold bistrejd-text-blue">
+                <i class="bi bi-folder-plus me-2"></i>Внес на нова категорија
+            </h5>
+        </div>
+        <div class="card-body p-4 p-md-5">
+            <form asp-area="Admin" asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 small fw-bold mb-4"></div>
 
-                <div class="mb-3">
-                    <label asp-for="ParentCategoryId" class="form-label fw-bold">Parent Node Assignment Placement</label>
-                    <select asp-for="ParentCategoryId" class="form-select" asp-items="ViewBag.ParentCategoryId">
-                        <option value="-1">-- None (Establish as Top-Level Root Shelf) --</option>
-                    </select>
-                    <span asp-validation-for="ParentCategoryId" class="text-danger small"></span>
-                    <div class="form-text text-muted small">Choosing an option assigns this group as a dependent branch under that parent's relative route.</div>
+                <div class="mb-4">
+                    <label asp-for="Name" class="form-label font-monospace small fw-bold text-muted text-uppercase">Име на категорија</label>
+                    <input asp-for="Name" class="form-control border shadow-none py-2" style="border-radius: 8px;" placeholder="Пр: Рачни алати..." />
+                    <span asp-validation-for="Name" class="text-danger small fw-bold mt-1 d-block"></span>
                 </div>
 
                 <div class="mb-4">
-                    <label asp-for="Description" class="form-label fw-bold">Structural Internal Description</label>
-                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="Define product groupings, indexing criteria, or marketing tagnotes belonging to this group..."></textarea>
-                    <span asp-validation-for="Description" class="text-danger small"></span>
+                    <label asp-for="ParentCategoryId" class="form-label font-monospace small fw-bold text-muted text-uppercase">Родителска категорија</label>
+                    <select asp-for="ParentCategoryId" class="form-select border shadow-none py-2" style="border-radius: 8px;" asp-items="ViewBag.ParentCategoryId">
+                        <option value="">-- Избери родител или остави празно за Root --</option>
+                    </select>
+                    <span asp-validation-for="ParentCategoryId" class="text-danger small fw-bold mt-1 d-block"></span>
+                    <div class="mt-2 text-muted font-monospace small">
+                        <i class="bi bi-info-circle me-1"></i> Оставајќи го празно, оваа категорија станува независен главен јазол (Root).
+                    </div>
                 </div>
 
-                <div class="d-flex justify-content-between align-items-center border-top pt-3">
-                    <a  asp-area="Admin" asp-action="Index" class="btn btn-outline-secondary">
-                        <i class="bi bi-arrow-left me-1"></i> Cancel Setup
+
+                <div class="mb-5">
+                    <label asp-for="Description" class="form-label font-monospace small fw-bold text-muted text-uppercase">Опис и белешки</label>
+                    <textarea asp-for="Description" class="form-control border shadow-none p-3 font-monospace small" style="border-radius: 8px;" rows="3" placeholder="Внесете опис за организација на производите..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger small fw-bold mt-1 d-block"></span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center border-top pt-4">
+                    <a asp-action="Index" class="btn btn-outline-secondary px-4 py-2 fw-medium" style="border-radius: 8px;">
+                        <i class="bi bi-x-circle me-2"></i>Откажи
                     </a>
-                    <button type="submit" class="btn btn-primary px-4">
-                        <i class="bi bi-check-circle me-1"></i> Commit Branch Node
+                    <button type="submit" class="btn btn-primary px-5 py-2 fw-bold text-uppercase shadow-sm" style="border-radius: 8px;">
+                        <i class="bi bi-check-circle-fill me-2"></i>Креирај Јазол
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

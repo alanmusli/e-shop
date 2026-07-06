@@ -1,23 +1,57 @@
 ﻿@page
 @model ResendEmailConfirmationModel
 @{
-    ViewData["Title"] = "Resend email confirmation";
+    ViewData["Title"] = "Препрати е-маил за потврда";
 }
 
-<h1>@ViewData["Title"]</h1>
-<h2>Enter your email.</h2>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email" class="form-label"></label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+<div class="container py-5 fade-in">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-5">
+            
+            <!-- Картичка за препраќање е-маил -->
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                
+                <!-- Хедер на картичката -->
+                <div class="card-header bg-white border-0 text-center pt-5 pb-3">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-light rounded-circle mb-3 shadow-sm" style="width: 70px; height: 70px;">
+                        <i class="bi bi-envelope-paper-fill fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="fw-bold text-dark mb-1">Не добивте е-маил?</h3>
+                    <p class="text-muted small px-3">Внесете ја вашата адреса подолу и ние повторно ќе ви испратиме линк за активација на профилот.</p>
+                </div>
+
+                <div class="card-body px-4 px-md-5 pb-5 pt-2">
+                    
+                    <form method="post">
+                        <!-- Тука користиме All бидејќи Identity често ги става сите грешки во Summary за оваа форма -->
+                        <div asp-validation-summary="All" class="alert alert-danger rounded-3 small fw-bold" role="alert" style="@(ModelState.ErrorCount > 0 ? "" : "display:none;")"></div>
+                        
+                        <!-- Е-маил -->
+                        <div class="form-floating mb-4">
+                            <input asp-for="Input.Email" class="form-control bg-light border-0 shadow-none" 
+                                   style="border-radius: 10px;" aria-required="true" placeholder="name@example.com" />
+                            <label asp-for="Input.Email" class="text-muted"><i class="bi bi-envelope me-2"></i>Е-маил адреса</label>
+                            <span asp-validation-for="Input.Email" class="text-danger small fw-bold mt-1 d-block"></span>
+                        </div>
+                        
+                        <!-- Копче -->
+                        <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold shadow-sm" style="border-radius: 10px; letter-spacing: 0.5px;">
+                            Препрати линк <i class="bi bi-send-check ms-2"></i>
+                        </button>
+                    </form>
+
+                </div>
+                
+                <!-- Футер на картичката (Копче за враќање назад) -->
+                <div class="card-footer bg-light border-0 text-center py-4">
+                    <a asp-page="./Login" class="text-secondary fw-semibold text-decoration-none small transition-all">
+                        <i class="bi bi-arrow-left me-1"></i> Назад кон најава
+                    </a>
+                </div>
+                
             </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Resend</button>
-        </form>
+            
+        </div>
     </div>
 </div>
 

@@ -1,82 +1,80 @@
 @model e_store.Models.Product
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Бришење на Продукт";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Brand)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Brand.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.InventoryCount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.InventoryCount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageUrl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SKU)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SKU)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category.Name)
-        </dd>
-    </dl>
+<div class="container-fluid py-5" style="max-width: 750px;">
     
-    <form asp-action="Delete" asp-area="Admin" >
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-area="Admin"  asp-action="Index">Back to List</a>
-    </form>
+    <div class="mb-4">
+        <a asp-action="Index" class="btn btn-sm btn-light font-monospace text-uppercase fw-bold text-muted px-3">
+            <i class="bi bi-arrow-left me-2"></i>Назад кон лагер
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-lg" style="border-radius: 16px; overflow: hidden;">
+        
+        <div class="card-header border-0 py-4" style="background-color: #dc3545; color: white;">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill fs-1 me-3 opacity-75"></i>
+                <div>
+                    <h4 class="mb-1 fw-bold">Потврда за бришење</h4>
+                    <p class="mb-0 small opacity-75 font-monospace text-uppercase" style="letter-spacing: 0.5px;">
+                        Оваа акција е трајна и неповратна
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-4 p-md-5 bg-white">
+            <p class="text-dark fs-5 mb-4 text-center">
+                Дали сте сигурни дека сакате да го избришете следниот производ од системот?
+            </p>
+
+            <div class="bg-light p-4 rounded-4 border border-danger border-opacity-25 mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary border-opacity-10">
+                    <h5 class="fw-bold bistrejd-text-blue mb-0">@Model.Name</h5>
+                    <span class="badge border border-danger text-danger font-monospace px-2 py-1 bg-white">
+                        ID: #@Model.Id
+                    </span>
+                </div>
+                
+                <div class="row g-3">
+                    <div class="col-6">
+                        <p class="mb-1 text-muted small font-monospace text-uppercase">Системско SKU</p>
+                        <p class="mb-0 fw-bold text-dark">@Model.SKU</p>
+                    </div>
+                    <div class="col-6">
+                        <p class="mb-1 text-muted small font-monospace text-uppercase">Бренд</p>
+                        <p class="mb-0 fw-bold text-dark">@(Model.Brand?.Name ?? "/")</p>
+                    </div>
+                    <div class="col-6">
+                        <p class="mb-1 text-muted small font-monospace text-uppercase">Категорија</p>
+                        <p class="mb-0 fw-bold text-dark">@(Model.Category?.Name ?? "/")</p>
+                    </div>
+                    <div class="col-6">
+                        <p class="mb-1 text-muted small font-monospace text-uppercase">Моментална залиха</p>
+                        <p class="mb-0 fw-bold @(Model.InventoryCount == 0 ? "text-danger" : "text-success")">
+                            @Model.InventoryCount парчиња
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <form asp-area="Admin" asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+                
+                <div class="d-flex justify-content-between align-items-center mt-5">
+                    <a asp-action="Index" class="btn btn-outline-secondary px-4 py-2 fw-medium rounded-3">
+                        <i class="bi bi-x-circle me-2"></i>Откажи
+                    </a>
+                    <button type="submit" class="btn btn-danger px-5 py-2 fw-bold text-uppercase shadow-sm rounded-3">
+                        <i class="bi bi-trash3-fill me-2"></i>Избриши Трајно
+                    </button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
 </div>

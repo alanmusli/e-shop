@@ -1,0 +1,90 @@
+@model e_store.Models.Brand
+
+@{
+    ViewData["Title"] = "Ажурирај Бренд";
+}
+
+<div class="container-fluid px-0 py-4 fade-in">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h3 class="fw-bold text-dark mb-0">
+                        <i class="bi bi-building-gear text-primary me-2"></i> Ажурирај Бренд
+                    </h3>
+                    <p class="text-muted small mt-1 mb-0">Промена на основните информации и податоци за контакт.</p>
+                </div>
+            </div>
+            
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4 p-md-5">
+                    
+                    <form asp-area="Admin" asp-controller="Brand" asp-action="Edit" method="post">
+                        
+                        <input type="hidden" asp-for="Id" />
+                        
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 small fw-bold" role="alert"></div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="Name" class="form-label fw-bold text-secondary">
+                                Име на бренд <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Name" class="form-control form-control-lg bg-light border-0" 
+                                   style="border-radius: 10px;" placeholder="Внесете име на брендот..." autocomplete="off" />
+                            <span asp-validation-for="Name" class="text-danger small fw-bold mt-1 d-block"></span>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="ImageUrl" class="form-label fw-bold text-secondary">
+                                Име на бренд <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="ImageUrl" class="form-control form-control-lg bg-light border-0" 
+                                   style="border-radius: 10px;" placeholder="Внесете линк за слика на брендот..." autocomplete="off" />
+                            <span asp-validation-for="ImageUrl" class="text-danger small fw-bold mt-1 d-block"></span>
+                        </div>
+
+                        <hr class="text-muted opacity-10 my-4">
+                        <h6 class="fw-bold text-dark mb-4"><i class="bi bi-info-circle me-2"></i>Дополнителни информации (Опционално)</h6>
+                        
+                        <div class="mb-4">
+                            <label asp-for="Location" class="form-label fw-bold text-secondary">Седиште / Локација</label>
+                            <div class="input-group input-group-lg shadow-none">
+                                <span class="input-group-text bg-light border-0 text-muted" style="border-radius: 10px 0 0 10px;">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                </span>
+                                <input asp-for="Location" class="form-control bg-light border-0" 
+                                       style="border-radius: 0 10px 10px 0;" placeholder="На пр. Скопје, Македонија" />
+                            </div>
+                            <span asp-validation-for="Location" class="text-danger small fw-bold mt-1 d-block"></span>
+                        </div>
+
+                        <div class="mb-5">
+                            <label asp-for="ContactEmail" class="form-label fw-bold text-secondary">Е-маил за контакт</label>
+                            <div class="input-group input-group-lg shadow-none">
+                                <span class="input-group-text bg-light border-0 text-muted" style="border-radius: 10px 0 0 10px;">
+                                    <i class="bi bi-envelope-at-fill"></i>
+                                </span>
+                                <input asp-for="ContactEmail" type="email" class="form-control bg-light border-0" 
+                                       style="border-radius: 0 10px 10px 0;" placeholder="contact@brand.com" />
+                            </div>
+                            <span asp-validation-for="ContactEmail" class="text-danger small fw-bold mt-1 d-block"></span>
+                        </div>
+
+                        <div class="d-flex gap-3 pt-2 mt-4 border-top pt-4">
+                            <a asp-action="Index" class="btn btn-light btn-lg w-50 fw-bold shadow-sm" style="border-radius: 10px; color: #6c757d;">
+                                <i class="bi bi-arrow-left me-2"></i> Откажи
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg w-50 fw-bold shadow-sm" style="border-radius: 10px;">
+                                <i class="bi bi-floppy-fill me-2"></i> Зачувај
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

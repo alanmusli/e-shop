@@ -32,11 +32,11 @@ ViewData["Title"] = "Менаџирање со Нарачки";
                 <div class="col-md-3">
                     <select id="status-filter" class="form-select form-select-sm text-muted shadow-none">
                         <option value="">Сите Статуси</option>
-                        <option value="нова">Нова</option>
-                        <option value="во обработка">Во Обработка</option>
-                        <option value="пратена">Пратена</option>
-                        <option value="доставена">Доставена</option>
-                        <option value="откажана">Откажана</option>
+                        <option value="new">Нова</option>
+                        <option value="processing">Во Обработка</option>
+                        <option value="shipped">Пратена</option>
+                        <option value="delivered">Доставена</option>
+                        <option value="cancelled">Откажана</option>
                     </select>
                 </div>
                 <div class="col-md-3">
@@ -132,7 +132,7 @@ ViewData["Title"] = "Менаџирање со Нарачки";
         document.getElementById("status-filter").addEventListener("change", function(){
             if(this.value === "") {
                 table.removeFilter("statusLower", "=", "");
-                table.clearFilter(); // Ако користиш повеќе филтри истовремено, ќе треба понапредна логика
+                table.clearFilter(); 
             } else {
                 table.setFilter("statusLower", "=", this.value);
             }

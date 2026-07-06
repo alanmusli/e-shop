@@ -28,7 +28,7 @@ public class BrandController : Controller
     }
 
     [HttpPost]
-    public IActionResult Add(int Id,string? Name)
+    public IActionResult Add(int Id,string? Name, string? Location, string? ContactEmail)
     {
         var isThere = _context.Brands.FirstOrDefault(x => x.Name.ToLower() == Name.ToLower());
         if (isThere == null)
@@ -36,16 +36,62 @@ public class BrandController : Controller
             var brand = new Brand()
             {
                 Id = Id,
-                Name = Name
+                Name = Name,
+                Location = Location,
+                ContactEmail = ContactEmail
             };
 
             _context.Brands.Add(brand);
             _context.SaveChanges();
         }
 
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Brand");
     }
 
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(int? id)
+    {
+        var brand = await _context.Brands.FirstOrDefaultAsync(x => x.Id == id);
+        if (brand == null)
+        {
+            return NotFound();
+        }
+
+        return View(brand);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken] 
+    public async Task<IActionResult> Edit(Brand brand)
+    {
+        
+        if (!ModelState.IsValid)
+        {
+            return View(brand);
+        }
+        
+        var existingBrand = await _context.Brands.FindAsync(brand.Id);
+
+        if (existingBrand == null)
+        {
+            return NotFound();
+        }
+
+        existingBrand.Name = brand.Name;
+        existingBrand.ImageUrl = brand.ImageUrl;
+        existingBrand.Location = brand.Location;
+        existingBrand.ContactEmail = brand.ContactEmail;
+
+        _context.Brands.Update(existingBrand);
+        await _context.SaveChangesAsync();
+        
+        TempData["SuccessMessage"] = $"Брендот '{brand.Name}' е успешно ажуриран!";
+        
+        return RedirectToAction(nameof(Index));
+    }
+    
+    [HttpGet]
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -53,7 +99,6 @@ public class BrandController : Controller
             return NotFound();
         }
 
-        // 2. Add 'await' and change '.FirstOrDefault()' to '.FirstOrDefaultAsync()'
         var brand = await _context.Brands
             .Include(x => x.Products)
             .FirstOrDefaultAsync(x => x.Id == id);
