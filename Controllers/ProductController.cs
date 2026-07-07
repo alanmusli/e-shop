@@ -82,8 +82,10 @@ namespace e_store.Controllers
 
             if (slug != "all")
             {
+                var cleanSlug = System.Net.WebUtility.UrlDecode(slug);
+                
                 var targetCat = await _context.Categories
-                    .FirstOrDefaultAsync(x => x.Slug == slug);
+                    .FirstOrDefaultAsync(x => x.Slug == cleanSlug);
 
                 if (targetCat != null)
                 {

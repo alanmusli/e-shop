@@ -1,0 +1,35 @@
+@model e_store.Models.Category
+
+@{
+    int level = ViewData["level"] as int? ?? 0;
+    double paddingLeft = 1.5 + (level * 1.0);
+    string textClass = level == 0 ? "fw-bold bistrejd-text-blue mt-1" : "fw-medium text-muted fs-6";
+}
+
+<li>
+    <a class="dropdown-item py-1"
+       asp-controller="Product" 
+       asp-action="Index" 
+       asp-route-slug="@Model.Slug"
+       style="padding-left: calc(1.0rem + @(level * 1.5)rem); transition: all 0.2s;"
+       onmouseover="this.style.color='var(--brand-red)'; this.style.backgroundColor='#e9ecef';"
+       onmouseout="this.style.color=''; this.style.backgroundColor='transparent';">
+        
+        @if (level > 0)
+        {
+            <i class="bi bi-arrow-return-right me-1" style="font-size: 0.75rem; opacity: 0.5; padding-left: 0.2rem;"></i>
+        }
+        @Model.Name
+    </a>
+</li>
+
+@if (Model.SubCategories != null && Model.SubCategories.Any())
+{
+    foreach (var subCategory in Model.SubCategories)
+    {
+        var nextViewData = new ViewDataDictionary(ViewData);
+        nextViewData["level"] = level + 1;
+        
+        <partial name="_NavbarCategoryRow" model="subCategory" view-data="nextViewData" />
+    }
+}
